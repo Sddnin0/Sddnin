@@ -130,17 +130,6 @@ AddButton(Tab1o, {
 	}) 
 
 AddButton(Tab4o, {
-     Name = "Bond and win 2",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-loadstring(game:HttpGetAsync("https://gist.githubusercontent.com/RedZenXYZ/3da6af1961efa275de6c3c2a6dbace03/raw/bb027f99cec0ea48ef9c5eabfb9116ddff20633d/FE%2520Emotes%2520Gui"))()
-		end
-	}) 
-
-AddButton(Tab4o, {
      Name = "Bond and win",
     Callback = function()
 	  local Settings = {
@@ -160,7 +149,7 @@ AddButton(Tab1o, {
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Sddnin0/Sddnin-hub/refs/heads/main/Sddninlhublua.txt"))()
 		end
 	}) 
-AddButton(Tab1o, {
+AddButton(Tab2o, {
      Name = "Emote",
     Callback = function()
 	  local Settings = {
