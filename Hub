@@ -129,8 +129,8 @@ AddButton(Tab1o, {
 		end
 	}) 
 
-AddButton(Tab2o, {
-     Name = "Teddy Hub",
+AddButton(Tab4o, {
+     Name = "Bond and win 2",
     Callback = function()
 	  local Settings = {
   JoinTeam = "Pirates"; -- Pirates/Marines
