@@ -150,14 +150,13 @@ AddButton(Tab4o, {
 loadstring(game:HttpGet("https://raw.githubusercontent.com/TwoGunVolley/Dedrail/refs/heads/main/Protected_8860927939362090.txt"))()
 		end
 	}) 
-
 AddButton(Tab1o, {
-     Name = "Teddy Hub",
+     Name = "Sddnin Hub",
     Callback = function()
 	  local Settings = {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Marco8642/science/refs/heads/ok/dead%20rails"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Sddnin0/Sddnin0/refs/heads/main/Sddninlua.txt"))()
 		end
 	}) 
