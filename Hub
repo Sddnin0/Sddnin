@@ -157,6 +157,6 @@ AddButton(Tab1o, {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Sddnin1/Sddnin-/refs/heads/main/Sddninlua.txt"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Sddnin0/Sddnin-hub/refs/heads/main/Sddninlhublua.txt"))()
 		end
 	}) 
