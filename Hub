@@ -169,3 +169,25 @@ AddButton(Tab4o, {
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Marco8642/science/refs/heads/ok/dead%20rails"))()
 		end
 	}) 
+
+	AddButton(Tab4o, {
+     Name = "Null-Fire",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+			}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/InfernusScripts/Null-Fire/main/Loader"))("DingaScripts")
+			end
+			})
+			
+	AddButton(Tab4o, {
+     Name = "NPC lock",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+			}
+loadstring(game:HttpGet("https://rawscripts.net/raw/Dead-Rails-NPC-LOCK-32544"))()
+			end
+			})
