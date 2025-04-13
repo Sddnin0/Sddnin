@@ -191,3 +191,47 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/InfernusScripts/Null-
 loadstring(game:HttpGet("https://rawscripts.net/raw/Dead-Rails-NPC-LOCK-32544"))()
 			end
 			})
+
+AddButton(Tab2o, {
+     Name = "Nameless Admin",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+			}
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-admin-15646"))()
+			end
+			})
+			
+			AddButton(Tab1o, {
+     Name = "Hiru Hub",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+			}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NGUYENVUDUY1/Source/main/HiruHub.lua"))()
+			end
+			})
+			
+			AddButton(Tab1o, {
+     Name = "Maru Hub",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+			}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/KimP/refs/heads/main/MaruHub"))()
+			end
+			})
+			
+			AddButton(Tab1o, {
+     Name = "Trau Roblox",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+			}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/stuckez999/main/refs/heads/main/traurobloxpremium.lua"))()
+			end
+			})
