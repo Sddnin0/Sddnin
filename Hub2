@@ -246,15 +246,17 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Marco8642/science/ref
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 		}
-		
-		AddButton(Tab5o, {
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+	end
+})
+AddButton(Tab5o, {
      Name = "Nameless Admin",
     Callback = function()
 	  local Settings = {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-			loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-admin-15646"))()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-admin-15646"))()
 			end
 			})
 			
