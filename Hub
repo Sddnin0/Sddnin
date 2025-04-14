@@ -71,7 +71,7 @@ AddButton(Tab2o, {
 	end
 })
 
-AddButton(Tab3o, {
+AddButton(Tab1o, {
      Name = "Hop fruit (Blox fruits)",
     Callback = function()
 	  local Settings = {
