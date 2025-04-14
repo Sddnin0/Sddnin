@@ -199,7 +199,7 @@ AddButton(Tab2o, {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-admin-15646"))()
+			loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-admin-15646"))()
 			end
 			})
 			
@@ -210,7 +210,7 @@ loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-ad
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/NGUYENVUDUY1/Source/main/HiruHub.lua"))()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/NGUYENVUDUY1/Source/main/HiruHub.lua"))()
 			end
 			})
 			
@@ -221,7 +221,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/NGUYENVUDUY1/Source/m
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/KimP/refs/heads/main/MaruHub"))()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/KimP/refs/heads/main/MaruHub"))()
 			end
 			})
 			
@@ -232,11 +232,11 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/KimP/refs/he
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/stuckez999/main/refs/heads/main/traurobloxpremium.lua"))()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/stuckez999/main/refs/heads/main/traurobloxpremium.lua"))()
 			end
 			})
-
-AddButton(Tab4o, {
+			
+			AddButton(Tab4o, {
      Name = "Tp Castle",
     Callback = function()
 	  local Settings = {
