@@ -291,3 +291,13 @@ AddButton(Tab2o, {
 			end
 			})
 
+        AddButton(Tab3o, {
+     Name = "Tp STERLING-TOWN",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+			}
+			loadstring(game:HttpGet('https://raw.githubusercontent.com/ringtaa/sterlingnotifcation.github.io/refs/heads/main/Sterling.lua'))()
+			end
+			})
