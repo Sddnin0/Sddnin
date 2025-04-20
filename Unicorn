@@ -1,0 +1,64 @@
+loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V2/refs/heads/main/UiREDzV2.lua")))()
+
+       local Window = MakeWindow({
+         Hub = {
+         Title = "Sddnin",
+         Animation = "Sddnin Hub"
+         },
+        Key = {
+        KeySystem = false,
+        Title = "Key System",
+        Description = "",
+        KeyLink = "",
+        Keys = {"1234"},
+        Notifi = {
+        Notifications = true,
+        CorrectKey = "Running the Script...",
+       Incorrectkey = "The key is incorrect",
+       CopyKeyLink = "Copied to Clipboard"
+      }
+    }
+  })
+
+       MinimizeButton({
+       Image = "http://73608909933636
+       Size = {60, 60},
+       Color = Color3.fromRGB(10, 10, 10),
+       Corner = true,
+       Stroke = false,
+       StrokeColor = Color3.fromRGB(255, 0, 0)
+      })
+      
+ESP:Toggle(true)
+ESP.Players = false
+ESP.Boxes = true
+ESP.Names = true
+ESP.TeamColor = false
+ESP.FaceCamera = true
+ESP.Distance = 1000000
+ 
+function AddIfAliveUnicorn(model)
+    if model:IsA("Model") and string.lower(model.Name):find("unicorn") then
+        local humanoid = model:FindFirstChildWhichIsA("Humanoid")
+        if humanoid and humanoid.Health > 0 then
+            local part = model:FindFirstChild("HumanoidRootPart") or model:FindFirstChildWhichIsA("BasePart")
+            if part then
+                ESP:Add(model, {
+                    Name = "Unicorn Atؤ±",
+                    PrimaryPart = part,
+                    Color = Color3.fromRGB(255, 182, 193),
+                    IsEnabled = true
+                })
+            end
+        end
+    end
+end
+ 
+for _, obj in pairs(workspace:GetDescendants()) do
+    AddIfAliveUnicorn(obj)
+end
+ 
+workspace.DescendantAdded:Connect(function(obj)
+    wait(0.1)
+    AddIfAliveUnicorn(obj)
+end)
