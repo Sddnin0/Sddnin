@@ -140,13 +140,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/TwoGunVolley/Dedrail/
 		end
 	}) 
 AddButton(Tab1o, {
-     Name = "Sddnin Hub",
+     Name = "Rolls Rocye",
     Callback = function()
 	  local Settings = {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Sddnin0/Sddnin-hub/refs/heads/main/Sddninlhublua.txt"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/RealMatsune/Rolls-Rocye/refs/heads/main/Loading.lua"))()
 		end
 	}) 
 AddButton(Tab2o, {
