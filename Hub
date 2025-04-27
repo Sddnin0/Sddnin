@@ -37,14 +37,14 @@ local Tab4o = MakeTab({Name = "Dead rails"})
 ------- BUTTON
     
       AddButton(Tab1o, {
-     Name = "Xeter Hub",
+     Name = "Blue X Hub",
     Callback = function()
 	  local Settings = {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 }  
 			
-getgenv().Version = "V1" loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/Loader/main/Xeter.lua"))(Settings)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()
 end
 })
 AddButton(Tab2o, {
