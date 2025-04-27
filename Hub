@@ -248,17 +248,6 @@ AddButton(Tab2o, {
 			})
 			
 			AddButton(Tab3o, {
-     Name = "Bond and win 3",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/refs/heads/main/DeadRails"))()
-			end
-			})
-			
-			AddButton(Tab3o, {
      Name = "TP fort ",
     Callback = function()
 	  local Settings = {
