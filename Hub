@@ -276,7 +276,7 @@ AddButton(Tab2o, {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-			loadstring(game:HttpGet('https://skullhub.xyz/loader.lua'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/hungquan99/SkullHub/main/loader.lua'))()
 			end
 			})
 
@@ -325,7 +325,7 @@ AddButton(Tab2o, {
 			})
 
 AddButton(Tab1o, {
-     Name = "Họp All",
+     Name = "Hop All",
     Callback = function()
 	  local Settings = {
   JoinTeam = "Pirates"; -- Pirates/Marines
