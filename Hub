@@ -125,7 +125,7 @@ AddButton(Tab1o, {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/Min/refs/heads/main/MinXoE"))()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/MinGamingHubNew/RealMinGaming/refs/heads/main/MinGaminvHubBloxFruits.lua"))()
 		end
 	}) 
 
