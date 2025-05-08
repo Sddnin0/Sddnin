@@ -369,7 +369,7 @@ AddButton(Tab2o, {
 			})
 
 AddButton(Tab2o, {
-     Name = "Native",
+     Name = "Fly",
     Callback = function()
 	  local Settings = {
   JoinTeam = "Pirates"; -- Pirates/Marines
@@ -380,7 +380,7 @@ AddButton(Tab2o, {
 			})
 
 AddButton(Tab4o, {
-     Name = "Fly",
+     Name = "Native",
     Callback = function()
 	  local Settings = {
   JoinTeam = "Pirates"; -- Pirates/Marines
