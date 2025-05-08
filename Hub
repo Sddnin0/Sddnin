@@ -280,15 +280,15 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/hungquan99/SkullHub/m
 			end
 			})
 
-        AddButton(Tab3o, {
-     Name = "Tp STERLING-TOWN",
+        AddButton(Tab4o, {
+     Name = "NatHub" ,
     Callback = function()
 	  local Settings = {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-			loadstring(game:HttpGet('https://raw.githubusercontent.com/ringtaa/sterlingnotifcation.github.io/refs/heads/main/Sterling.lua'))()
-			end
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/ArdyBotzz/NatHub/refs/heads/master/NatHub.lua"))()
+end
 			})
 
        AddButton(Tab4o, {
@@ -369,12 +369,23 @@ AddButton(Tab2o, {
 			})
 
 AddButton(Tab2o, {
-     Name = "Fly",
+     Name = "Native",
     Callback = function()
 	  local Settings = {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
 			loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Vehicle%20Fly%20Gui'))()
+			end
+			})
+
+AddButton(Tab4o, {
+     Name = "Fly",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+			}
+			loadstring(game:HttpGet("https://getnative.cc/script/loader"))()
 			end
 			})
