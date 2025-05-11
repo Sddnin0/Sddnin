@@ -389,3 +389,14 @@ AddButton(Tab4o, {
 			loadstring(game:HttpGet("https://getnative.cc/script/loader"))()
 			end
 			})
+
+AddButton(Tab4o, {
+     Name = "KiciaHook-V2",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+			}
+			loadstring(game:HttpGet("https://rawscripts.net/raw/Dead-Rails-Alpha-OP-KiciaHook-V2-Dead-Rails-Auto-Farm-And-More-38614"))()
+			end
+			})
