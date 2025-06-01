@@ -34,6 +34,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
      local Tab2o = MakeTab({Name = "Misc"})
 local Tab3o = MakeTab({Name = "Dead tool"})
 local Tab4o = MakeTab({Name = "Dead rails"})
+local Tab5o = MakeTab({Name = "Grow a garden"})
 ------- BUTTON
     
       AddButton(Tab1o, {
@@ -398,5 +399,27 @@ AddButton(Tab4o, {
   Translator = true; -- true/false
 			}
 			loadstring(game:HttpGet("https://rawscripts.net/raw/Dead-Rails-Alpha-OP-KiciaHook-V2-Dead-Rails-Auto-Farm-And-More-38614"))()
+			end
+			})
+
+AddButton(Tab5o, {
+     Name = "No lag",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+}
+ loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/NoLag-id/No-Lag-HUB/refs/heads/main/Loader/LoaderV1.lua"))()
+end
+})
+
+AddButton(Tab5o, {
+     Name = "Native",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+			}
+			loadstring(game:HttpGet("https://getnative.cc/script/loader"))()
 			end
 			})
