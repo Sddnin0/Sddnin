@@ -423,3 +423,14 @@ AddButton(Tab5o, {
 			loadstring(game:HttpGet("https://getnative.cc/script/loader"))()
 			end
 			})
+
+        AddButton(Tab5o, {
+     Name = "NatHub" ,
+    Callback = function()
+          local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+                        }
+                        loadstring(game:HttpGet("https://raw.githubusercontent.com/ArdyBotzz/NatHub/refs/heads/master/NatHub.lua"))()
+end
+                        })
