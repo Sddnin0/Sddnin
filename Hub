@@ -171,14 +171,14 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Marco8642/science/ref
 		end
 	}) 
 
-	AddButton(Tab4o, {
-     Name = "Null-Fire",
+	AddButton(Tab5o, {
+     Name = "Skull hub",
     Callback = function()
 	  local Settings = {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/InfernusScripts/Null-Fire/main/Loader"))("DingaScripts")
+loadstring(game:HttpGet('https://raw.githubusercontent.com/hungquan99/SkullHub/main/loader.lua'))()
 			end
 			})
 			
@@ -237,39 +237,7 @@ AddButton(Tab2o, {
 			end
 			})
 			
-			AddButton(Tab3o, {
-     Name = "Tp Castle",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/ringtaa/castletpfast.github.io/refs/heads/main/FASTCASTLE.lua"))()
-			end
-			})
 			
-			AddButton(Tab3o, {
-     Name = "TP fort ",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/ringtaa/Tpfort.github.io/refs/heads/main/Tpfort.lua"))()
-			end
-			})
-			
-			AddButton(Tab3o, {
-     Name = "TP Tesla ",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet('https://raw.githubusercontent.com/ringtaa/tptotesla.github.io/refs/heads/main/Tptotesla.lua'))()
-			end
-			})
-
 		AddButton(Tab4o, {
      Name = "Skull Hub",
     Callback = function()
