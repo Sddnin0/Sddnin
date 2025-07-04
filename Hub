@@ -32,7 +32,7 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
 ------ Tab
      local Tab1o = MakeTab({Name = "Blox fruits"})
      local Tab2o = MakeTab({Name = "Misc"})
-local Tab3o = MakeTab({Name = "Dead tool"})
+local Tab3o = MakeTab({Name = "99 night in the forest"})
 local Tab4o = MakeTab({Name = "Dead rails"})
 local Tab5o = MakeTab({Name = "Grow a garden"})
 ------- BUTTON
@@ -97,6 +97,18 @@ loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/255ac567ced3dc
 			end
 		})
 
+AddButton(Tab3o, {
+     Name = "AirFlow",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+				}
+
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/255ac567ced3dcb9e69aa7e44c423f19.lua"))()
+			end
+		})
+
 AddButton(Tab4o, {
      Name = "TN Roblox",
     Callback = function()
@@ -131,13 +143,13 @@ AddButton(Tab1o, {
 	}) 
 
 AddButton(Tab3o, {
-     Name = "Bond and win",
+     Name = "H4x",
     Callback = function()
 	  local Settings = {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
 			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/TwoGunVolley/Dedrail/refs/heads/main/Protected_8860927939362090.txt"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/H4xScripts/Loader/refs/heads/main/loader.lua", true))()
 		end
 	}) 
 AddButton(Tab1o, {
@@ -160,16 +172,7 @@ AddButton(Tab2o, {
 loadstring(game:HttpGetAsync("https://gist.githubusercontent.com/RedZenXYZ/3da6af1961efa275de6c3c2a6dbace03/raw/bb027f99cec0ea48ef9c5eabfb9116ddff20633d/FE%2520Emotes%2520Gui"))()
 		end
 	}) 
-AddButton(Tab3o, {
-     Name = "Bond and win 2",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Marco8642/science/refs/heads/ok/dead%20rails"))()
-		end
-	}) 
+
 
 	AddButton(Tab5o, {
      Name = "Skull hub",
@@ -271,7 +274,7 @@ end
 			end
 			})
 
-       AddButton(Tab3o, {
+       AddButton(Tab4o, {
      Name = "Tp All",
     Callback = function()
 	  local Settings = {
