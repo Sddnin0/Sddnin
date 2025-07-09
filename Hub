@@ -425,7 +425,17 @@ AddButton(Tab5o, {
   JoinTeam = "Pirates"; -- Pirates/Marines
   Translator = true; -- true/false
                 }
+ loadstring(game:HttpGet(('https://raw.githubusercontent.com/FakeModz/LimitHub/refs/heads/main/LimitHub_Loader.lua')))()
+        end
+})
 
-                loadstring(game:HttpGet(('https://raw.githubusercontent.com/FakeModz/LimitHub/refs/heads/main/LimitHub_Loader.lua')))()
+AddButton(Tab5o, {
+     Name = "Speed Hub X",
+    Callback = function()
+          local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+                }
+ loadstring(game:HttpGet("https://rawscripts.net/raw/Grow-a-Garden-Speed-Hub-X-Keyless-38062"))()
         end
 })
