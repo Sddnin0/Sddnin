@@ -417,3 +417,15 @@ AddButton(Tab2o, {
 loadstring(game:HttpGet("https://raw.githubusercontent.com/0riginalWarrior/Stalkie/refs/heads/main/roblox.lua"))()
 end
 })
+
+AddButton(Tab5o, {
+     Name = "Limit Hub",
+    Callback = function()
+          local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+                }
+
+                loadstring(game:HttpGet(('https://raw.githubusercontent.com/FakeModz/LimitHub/refs/heads/main/LimitHub_Loader.lua')))()
+        end
+})
