@@ -2,8 +2,8 @@ local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shle
 
 local Window = MakeWindow({
          Hub = {
-         Title = "Sddnin",
-         Animation = "Sddnin Hub"
+         Title = "Sddnin V2",
+         Animation = "Sddnin Hub V2"
          },
         Key = {
         KeySystem = false,
@@ -28,3 +28,23 @@ local Window = MakeWindow({
        Stroke = false,
        StrokeColor = Color3.fromRGB(255, 0, 0)
       })
+
+------ Tab
+     local Tab1o = MakeTab({Name = "Blox fruits"})
+     local Tab2o = MakeTab({Name = "Misc"})
+local Tab3o = MakeTab({Name = "99 night in the forest"})
+local Tab4o = MakeTab({Name = "Dead rails"})
+local Tab5o = MakeTab({Name = "Grow a garden"})
+------- BUTTON
+    
+      AddButton(Tab1o, {
+     Name = "Blue X Hub",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+}  
+			
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()
+end
+})
