@@ -22,7 +22,7 @@ local Window = Rayfield:CreateWindow({
       FileName = "MilaHubKey",
       SaveKey = false,
       GrabKeyFromSite = true,
-      Key = {"Mila sub"}
+      Key = {"Milasub"}
 })
 
 local MainTab = Window:CreateTab(" Blox Fruits ", nil) -- Title, Image
