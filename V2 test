@@ -25,27 +25,21 @@ local Window = Rayfield:CreateWindow({
       Key = {"Milasub"}
 })
 
-local MainTab = Window:CreateTab(" Blox Fruits ", nil) -- Title, Image
-local MainSection = MainTab:CreateSection("Main")
-
-Rayfield:Notify({
-   Title = "You executed the script",
-   Content = "Very cool gui",
-   Duration = 5,
-   Image = 13047715178,
-   Actions = { -- Notification Buttons
-      Ignore = {
-         Name = "Okay!",
-         Callback = function()
-         print("The user tapped Okay!")
-      end
-   },
-},
-})
-
-local Button1 = MainTab:CreateButton({
-   Name = "BlueX-Hub",
-   Callback = function()
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()
-   end,
+------ Tab
+     local Tab1o = MakeTab({Name = "Blox fruits"})
+     local Tab2o = MakeTab({Name = "Misc"})
+local Tab3o = MakeTab({Name = "99 night in the forest"})
+local Tab4o = MakeTab({Name = "Dead rails"})
+local Tab5o = MakeTab({Name = "Grow a garden"})
+------- BUTTON
+    
+      AddButton(Tab1o, {
+     Name = "Blue X Hub",
+    Callback = function()
+	  local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+}  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()
+end
 })
