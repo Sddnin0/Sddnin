@@ -6,11 +6,11 @@ loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V
          Animation = "Sddnin Hub"
          },
         Key = {
-        KeySystem = false,
+        KeySystem = True,
         Title = "Key System",
         Description = "",
         KeyLink = "",
-        Keys = {"1234"},
+        Keys = {"Sddnin"},
         Notifi = {
         Notifications = true,
         CorrectKey = "Running the Script...",
