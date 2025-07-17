@@ -450,3 +450,14 @@ AddButton(Tab5o, {
  loadstring(game:HttpGet("https://lunor.dev/loader"))()
         end
 })
+
+AddButton(Tab5o, {
+     Name = "ThunderZ",
+    Callback = function()
+          local Settings = {
+  JoinTeam = "Pirates"; -- Pirates/Marines
+  Translator = true; -- true/false
+                }
+ loadstring(game:HttpGet('https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/GaG/Main.lua'))()
+        end
+})
