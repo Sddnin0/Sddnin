@@ -1,45 +1,670 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+-- Roblox UI Menu Script with Key System
 
-local Window = Rayfield:CreateWindow({
-   Name = "Mila V2",
-   LoadingTitle = "Mila Hub",
-   LoadingSubtitle = "by Gia Duc",
-   ConfigurationSaving = {
-      Enabled = false,
-      FolderName = nil,
-      FileName = "Youtube Mila"
-   },
-   Discord = {
-      Enabled = true,
-      Invite = "https://discord.gg/tRp8Q5D3"
-      RememberJoins = true.
-   },
-   KeySystem = true.
-   KeySettings = {
-      Title = "Key | Mila Hub",
-      Subtitle = "Password in Discord Server",
-      Note = "Update script every days",
-      FileName = "MilaHubKey",
-      SaveKey = false,
-      GrabKeyFromSite = true,
-      Key = {"Milasub"}
-})
+-- Tạo một ScreenGui để chứa tất cả các phần tử UI của chúng ta
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "MyUIMenu"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
------- Tab
-     local Tab1o = MakeTab({Name = "Blox fruits"})
-     local Tab2o = MakeTab({Name = "Misc"})
-local Tab3o = MakeTab({Name = "99 night in the forest"})
-local Tab4o = MakeTab({Name = "Dead rails"})
-local Tab5o = MakeTab({Name = "Grow a garden"})
-------- BUTTON
-    
-      AddButton(Tab1o, {
-     Name = "Blue X Hub",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-}  
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()
+-- ====================================================================
+-- PHẦN MẬT KHẨU
+-- ====================================================================
+local keyInputFrame = Instance.new("Frame")
+keyInputFrame.Name = "KeyInputFrame"
+keyInputFrame.Size = UDim2.new(0.3, 0, 0.3, 0)
+keyInputFrame.Position = UDim2.new(0.35, 0, 0.35, 0)
+keyInputFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+keyInputFrame.BorderSizePixel = 0
+keyInputFrame.Active = true
+keyInputFrame.Draggable = true
+keyInputFrame.Parent = screenGui
+
+local keyInputCorner = Instance.new("UICorner")
+keyInputCorner.CornerRadius = UDim.new(0, 8)
+keyInputCorner.Parent = keyInputFrame
+
+local keyInputStroke = Instance.new("UIStroke")
+keyInputStroke.Color = Color3.fromRGB(80, 80, 80)
+keyInputStroke.Thickness = 2
+keyInputStroke.Parent = keyInputFrame
+
+local keyTitleLabel = Instance.new("TextLabel")
+keyTitleLabel.Name = "KeyTitleLabel"
+keyTitleLabel.Size = UDim2.new(1, 0, 0.25, 0)
+keyTitleLabel.Position = UDim2.new(0, 0, 0, 0)
+keyTitleLabel.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+keyTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+keyTitleLabel.Font = Enum.Font.SourceSansBold
+keyTitleLabel.TextSize = 22
+keyTitleLabel.Text = "Nhập Mật Khẩu"
+keyTitleLabel.Parent = keyInputFrame
+
+local keyTextBox = Instance.new("TextBox")
+keyTextBox.Name = "KeyTextBox"
+keyTextBox.Size = UDim2.new(0.8, 0, 0.2, 0)
+keyTextBox.Position = UDim2.new(0.1, 0, 0.35, 0)
+keyTextBox.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
+keyTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+keyTextBox.Font = Enum.Font.SourceSans
+keyTextBox.TextSize = 18
+keyTextBox.PlaceholderText = "Mật khẩu..."
+keyTextBox.ClearTextOnFocus = true
+keyTextBox.Parent = keyInputFrame
+
+local submitKeyButton = Instance.new("TextButton")
+submitKeyButton.Name = "SubmitKeyButton"
+submitKeyButton.Size = UDim2.new(0.6, 0, 0.2, 0)
+submitKeyButton.Position = UDim2.new(0.2, 0, 0.6, 0)
+submitKeyButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+submitKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+submitKeyButton.Font = Enum.Font.SourceSansBold
+submitKeyButton.TextSize = 20
+submitKeyButton.Text = "Xác nhận"
+submitKeyButton.Parent = keyInputFrame
+
+local keyFeedbackLabel = Instance.new("TextLabel")
+keyFeedbackLabel.Name = "KeyFeedbackLabel"
+keyFeedbackLabel.Size = UDim2.new(0.9, 0, 0.15, 0)
+keyFeedbackLabel.Position = UDim2.new(0.05, 0, 0.85, 0)
+keyFeedbackLabel.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+keyFeedbackLabel.TextColor3 = Color3.fromRGB(200, 50, 50)
+keyFeedbackLabel.Font = Enum.Font.SourceSans
+keyFeedbackLabel.TextSize = 16
+keyFeedbackLabel.Text = ""
+keyFeedbackLabel.TextWrapped = true
+keyFeedbackLabel.Parent = keyInputFrame
+
+local CORRECT_KEY = "Join discord"
+
+submitKeyButton.MouseButton1Click:Connect(function()
+    local enteredKey = keyTextBox.Text
+    if enteredKey == CORRECT_KEY then
+        keyInputFrame.Visible = false -- Ẩn khung mật khẩu
+        menuFrame.Visible = true      -- Hiển thị menu chính
+        openButton.Visible = false    -- Ẩn nút mở (vì menu đã mở)
+        keyFeedbackLabel.Text = ""    -- Xóa thông báo lỗi
+        -- Kích hoạt tab đầu tiên khi menu được tải
+        if tabContents["Trang chủ"] then
+            tabContents["Trang chủ"].Visible = true
+            -- Cập nhật màu nút tab đầu tiên
+            for _, btn in pairs(tabBarFrame:GetChildren()) do
+                if btn:IsA("TextButton") and btn.Name == "Trang chủTabButton" then
+                    btn.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
+                    break
+                end
+            end
+        end
+    else
+        keyFeedbackLabel.Text = "Mật khẩu sai! Vui lòng thử lại."
+    end
+end)
+
+-- ====================================================================
+-- PHẦN MENU CHÍNH (đã có từ trước)
+-- ====================================================================
+local menuFrame = Instance.new("Frame")
+menuFrame.Name = "MenuFrame"
+menuFrame.Size = UDim2.new(0.4, 0, 0.7, 0)
+menuFrame.Position = UDim2.new(0.3, 0, 0.15, 0)
+menuFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+menuFrame.BorderSizePixel = 0
+menuFrame.Active = true
+menuFrame.Draggable = true
+menuFrame.Parent = screenGui
+menuFrame.Visible = false -- Ban đầu ẩn, chỉ hiển thị sau khi nhập đúng mật khẩu
+
+-- Thêm một UIStroke để tạo viền cho Frame
+local menuStroke = Instance.new("UIStroke")
+menuStroke.Color = Color3.fromRGB(70, 70, 70)
+menuStroke.Thickness = 2
+menuStroke.Parent = menuFrame
+
+-- Thêm một UICorner để làm tròn các góc của Frame
+local menuCorner = Instance.new("UICorner")
+menuCorner.CornerRadius = UDim.new(0, 8)
+menuCorner.Parent = menuFrame
+
+-- Tạo một TextLabel cho tiêu đề menu
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Name = "TitleLabel"
+titleLabel.Size = UDim2.new(1, 0, 0.08, 0)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.Font = Enum.Font.SourceSansBold
+titleLabel.TextSize = 20
+titleLabel.Text = "Menu của tôi"
+titleLabel.Parent = menuFrame
+
+-- Thêm một UIStroke cho tiêu đề
+local titleStroke = Instance.new("UIStroke")
+titleStroke.Color = Color3.fromRGB(90, 90, 90)
+titleStroke.Thickness = 1
+titleStroke.Parent = titleLabel
+
+-- Thêm một UICorner để làm tròn các góc trên của tiêu đề
+local titleCorner = Instance.new("UICorner")
+titleCorner.CornerRadius = UDim.new(0, 8)
+titleCorner.Parent = titleLabel
+
+-- Tạo nút đóng menu
+local closeButton = Instance.new("TextButton")
+closeButton.Name = "CloseButton"
+closeButton.Size = UDim2.new(0, 30, 0, 30)
+closeButton.Position = UDim2.new(1, -35, 0, 5)
+closeButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.Font = Enum.Font.SourceSansBold
+closeButton.TextSize = 20
+closeButton.Text = "X"
+closeButton.Parent = menuFrame
+
+-- Thêm một UICorner cho nút đóng
+local closeButtonCorner = Instance.new("UICorner")
+closeButtonCorner.CornerRadius = UDim.new(0, 5)
+closeButtonCorner.Parent = closeButton
+
+-- Tạo nút mở menu (sẽ hiển thị khi menu bị đóng)
+local openButton = Instance.new("TextButton")
+openButton.Name = "OpenButton"
+openButton.Size = UDim2.new(0, 100, 0, 40)
+openButton.Position = UDim2.new(0.05, 0, 0.05, 0)
+openButton.BackgroundColor3 = Color3.fromRGB(50, 150, 200)
+openButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+openButton.Font = Enum.Font.SourceSansBold
+openButton.TextSize = 18
+openButton.Text = "Mở Menu"
+openButton.Parent = screenGui
+openButton.Visible = false -- Ban đầu ẩn
+
+-- Thêm một UICorner cho nút mở
+local openButtonCorner = Instance.new("UICorner")
+openButtonCorner.CornerRadius = UDim.new(0, 8)
+openButtonCorner.Parent = openButton
+
+-- Tạo khung chứa các nút tab
+local tabBarFrame = Instance.new("Frame")
+tabBarFrame.Name = "TabBarFrame"
+tabBarFrame.Size = UDim2.new(1, 0, 0.1, 0)
+tabBarFrame.Position = UDim2.new(0, 0, 0.08, 0)
+tabBarFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+tabBarFrame.BorderSizePixel = 0
+tabBarFrame.Parent = menuFrame
+
+-- Thêm UIListLayout để sắp xếp các nút tab theo chiều ngang
+local tabListLayout = Instance.new("UIListLayout")
+tabListLayout.FillDirection = Enum.FillDirection.Horizontal
+tabListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+tabListLayout.Padding = UDim.new(0, 5)
+tabListLayout.Parent = tabBarFrame
+
+-- Tạo khung chứa nội dung của các tab
+local contentFrameContainer = Instance.new("Frame")
+contentFrameContainer.Name = "ContentFrameContainer"
+contentFrameContainer.Size = UDim2.new(1, 0, 0.82, 0)
+contentFrameContainer.Position = UDim2.new(0, 0, 0.18, 0)
+contentFrameContainer.BackgroundColor3 = Color3.fromRGB(55, 55, 55)
+contentFrameContainer.BorderSizePixel = 0
+contentFrameContainer.Parent = menuFrame
+
+-- Thêm UICorner cho contentFrameContainer
+local contentCorner = Instance.new("UICorner")
+contentCorner.CornerRadius = UDim.new(0, 8)
+contentCorner.Parent = contentFrameContainer
+
+-- Bảng để lưu trữ các khung nội dung tab
+local tabContents = {}
+
+-- Hàm để tạo nút tab và khung nội dung
+local function createTab(tabName, content)
+    -- Tạo nút tab
+    local tabButton = Instance.new("TextButton")
+    tabButton.Name = tabName .. "TabButton"
+    tabButton.Size = UDim2.new(0.3, 0, 0.8, 0)
+    tabButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    tabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    tabButton.Font = Enum.Font.SourceSansBold
+    tabButton.TextSize = 16
+    tabButton.Text = tabName
+    tabButton.Parent = tabBarFrame
+
+    local tabButtonCorner = Instance.new("UICorner")
+    tabButtonCorner.CornerRadius = UDim.new(0, 5)
+    tabButtonCorner.Parent = tabButton
+
+    -- Tạo khung nội dung cho tab. Sử dụng ScrollingFrame để có thể cuộn.
+    local tabContentFrame = Instance.new("ScrollingFrame")
+    tabContentFrame.Name = tabName .. "Content"
+    tabContentFrame.Size = UDim2.new(1, 0, 1, 0)
+    tabContentFrame.Position = UDim2.new(0, 0, 0, 0)
+    tabContentFrame.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    tabContentFrame.BorderSizePixel = 0
+    tabContentFrame.Visible = false
+    tabContentFrame.Parent = contentFrameContainer
+    tabContentFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+    tabContentFrame.AutomaticCanvasSize = Enum.AutomaticCanvasSize.Y
+    tabContentFrame.VerticalScrollBarInset = Enum.ScrollBarInset.Always
+    tabContentFrame.ScrollingDirection = Enum.ScrollingDirection.Y
+
+    -- Thêm UIListLayout cho các khung nội dung để sắp xếp các phần tử theo chiều dọc
+    local contentListLayout = Instance.new("UIListLayout")
+    contentListLayout.FillDirection = Enum.FillDirection.Vertical
+    contentListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    contentListLayout.Padding = UDim.new(0, 10)
+    contentListLayout.Parent = tabContentFrame
+
+    -- Thêm nội dung vào khung tab
+    if typeof(content) == "function" then
+        content(tabContentFrame)
+    else
+        local defaultLabel = Instance.new("TextLabel")
+        defaultLabel.Size = UDim2.new(0.9, 0, 0.2, 0)
+        defaultLabel.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+        defaultLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        defaultLabel.Font = Enum.Font.SourceSans
+        defaultLabel.TextSize = 18
+        defaultLabel.Text = "Đây là nội dung cho " .. tabName
+        defaultLabel.Parent = tabContentFrame
+    end
+
+    tabContents[tabName] = tabContentFrame
+
+    -- Xử lý sự kiện khi nhấp vào nút tab
+    tabButton.MouseButton1Click:Connect(function()
+        -- Ẩn tất cả các khung nội dung
+        for _, frame in pairs(tabContents) do
+            frame.Visible = false
+        end
+        -- Hiển thị khung nội dung của tab được chọn
+        tabContentFrame.Visible = true
+
+        -- Cập nhật màu nút tab (tùy chọn)
+        for _, btn in pairs(tabBarFrame:GetChildren()) do
+            if btn:IsA("TextButton") then
+                btn.BackgroundColor3 = Color3.fromRGB(70, 70, 70) -- Màu mặc định
+            end
+        end
+        tabButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90) -- Màu khi được chọn
+    end)
+
+    return tabButton
 end
-})
+
+-- Định nghĩa các tab và nội dung của chúng
+-- Tab 1: Trang chủ
+createTab("Trang chủ", function(parentFrame)
+    local welcomeLabel = Instance.new("TextLabel")
+    welcomeLabel.Size = UDim2.new(0.9, 0, 0.3, 0)
+    welcomeLabel.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    welcomeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    welcomeLabel.Font = Enum.Font.SourceSansBold
+    welcomeLabel.TextSize = 24
+    welcomeLabel.Text = "Chào mừng đến với Menu!"
+    welcomeLabel.TextWrapped = true
+    welcomeLabel.Parent = parentFrame
+
+    local infoLabel = Instance.new("TextLabel")
+    infoLabel.Size = UDim2.new(0.9, 0, 0.4, 0)
+    infoLabel.BackgroundColor3 = Color3.fromRGB(65, 65, 65)
+    infoLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    infoLabel.Font = Enum.Font.SourceSans
+    infoLabel.TextSize = 16
+    infoLabel.Text = "Sử dụng các tab ở trên để điều hướng qua các phần khác nhau của menu. Mỗi tab có thể chứa các nút, thông tin hoặc các điều khiển khác."
+    infoLabel.TextWrapped = true
+    infoLabel.TextXAlignment = Enum.TextXAlignment.Left
+    infoLabel.TextYAlignment = Enum.TextYAlignment.Top
+    infoLabel.Parent = parentFrame
+
+    -- Phần tìm kiếm (đã di chuyển vào tab Trang chủ)
+    local searchLabel = Instance.new("TextLabel")
+    searchLabel.Size = UDim2.new(0.9, 0, 0.1, 0)
+    searchLabel.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+    searchLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    searchLabel.Font = Enum.Font.SourceSans
+    searchLabel.TextSize = 16
+    searchLabel.Text = "Nhập từ khóa tìm kiếm:"
+    searchLabel.TextXAlignment = Enum.TextXAlignment.Left
+    searchLabel.Parent = parentFrame
+
+    local searchTextBox = Instance.new("TextBox")
+    searchTextBox.Name = "SearchTextBox"
+    searchTextBox.Size = UDim2.new(0.9, 0, 0.15, 0)
+    searchTextBox.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
+    searchTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    searchTextBox.Font = Enum.Font.SourceSans
+    searchTextBox.TextSize = 16
+    searchTextBox.PlaceholderText = "Nhập từ khóa..."
+    searchTextBox.Parent = parentFrame
+
+    local searchButton = Instance.new("TextButton")
+    searchButton.Name = "SearchButton"
+    searchButton.Size = UDim2.new(0.5, 0, 0.15, 0)
+    searchButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+    searchButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    searchButton.Font = Enum.Font.SourceSansBold
+    searchButton.TextSize = 18
+    searchButton.Text = "Tìm kiếm"
+    searchButton.Parent = parentFrame
+
+    searchButton.MouseButton1Click:Connect(function()
+        local searchText = searchTextBox.Text
+        if searchText ~= "" then
+            print("Đang tìm kiếm: " .. searchText)
+            -- Đây là nơi bạn sẽ thêm logic tìm kiếm thực tế
+            -- Ví dụ: lọc danh sách các phần tử UI hoặc gọi một chức năng tìm kiếm trong game
+        else
+            print("Vui lòng nhập từ khóa để tìm kiếm.")
+        end
+    end)
+end)
+
+-- Tab 2: Cài đặt
+createTab("Cài đặt", function(parentFrame)
+    -- Infinite Yield
+    local infiniteYieldButton = Instance.new("TextButton")
+    infiniteYieldButton.Name = "InfiniteYieldButton"
+    infiniteYieldButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    infiniteYieldButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    infiniteYieldButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    infiniteYieldButton.Font = Enum.Font.SourceSansBold
+    infiniteYieldButton.TextSize = 18
+    infiniteYieldButton.Text = "Infinite Yield"
+    infiniteYieldButton.Parent = parentFrame
+
+    infiniteYieldButton.MouseButton1Click:Connect(function()
+        print("Đang tải Infinite Yield...")
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+    end)
+
+    -- Fly V3
+    local flyV3Button = Instance.new("TextButton")
+    flyV3Button.Name = "FlyV3Button"
+    flyV3Button.Size = UDim2.new(0.9, 0, 0.15, 0)
+    flyV3Button.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    flyV3Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    flyV3Button.Font = Enum.Font.SourceSansBold
+    flyV3Button.TextSize = 18
+    flyV3Button.Text = "Fly V3"
+    flyV3Button.Parent = parentFrame
+
+    flyV3Button.MouseButton1Click:Connect(function()
+        print("Đang tải Fly V3...")
+        loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\40\39\104\116\116\112\115\58\47\47\103\105\115\116\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\109\101\111\122\111\110\101\89\84\47\98\102\48\51\55\100\102\102\57\102\48\97\55\48\48\49\55\51\48\52\100\100\100\54\55\102\100\99\100\51\55\48\47\114\97\119\47\101\49\52\101\55\52\102\52\50\53\98\48\54\48\100\102\53\50\51\51\52\51\99\102\51\48\98\55\56\55\48\55\52\101\98\51\99\53\100\50\47\97\114\99\101\117\115\37\50\53\50\48\120\37\50\53\50\48\102\108\121\37\50\53\50\48\50\37\50\53\50\48\111\98\102\108\117\99\97\116\111\114\39\41\44\116\114\117\101\41\41\40\41\10\10")()
+    end)
+
+    -- Emote r15
+    local emoteR15Button = Instance.new("TextButton")
+    emoteR15Button.Name = "EmoteR15Button"
+    emoteR15Button.Size = UDim2.new(0.9, 0, 0.15, 0)
+    emoteR15Button.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    emoteR15Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    emoteR15Button.Font = Enum.Font.SourceSansBold
+    emoteR15Button.TextSize = 18
+    emoteR15Button.Text = "Emote r15"
+    emoteR15Button.Parent = parentFrame
+
+    emoteR15Button.MouseButton1Click:Connect(function()
+        print("Đang tải Emote r15...")
+        loadstring(game:HttpGetAsync("https://gist.githubusercontent.com/RedZenXYZ/3da6af1961efa275de6c3c2a6dbace03/raw/bb027f99cec0ea48ef9c5eabfb9116ddff20633d/FE%2520Emotes%2520Gui"))()
+    end)
+
+    -- Nameless Admin
+    local namelessAdminButton = Instance.new("TextButton")
+    namelessAdminButton.Name = "NamelessAdminButton"
+    namelessAdminButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    namelessAdminButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    namelessAdminButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    namelessAdminButton.Font = Enum.Font.SourceSansBold
+    namelessAdminButton.TextSize = 18
+    namelessAdminButton.Text = "Nameless Admin"
+    namelessAdminButton.Parent = parentFrame
+
+    namelessAdminButton.MouseButton1Click:Connect(function()
+        print("Đang tải Nameless Admin...")
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-admin-15646"))()
+    end)
+
+    -- Arceus X
+    local arceusXButton = Instance.new("TextButton")
+    arceusXButton.Name = "ArceusXButton"
+    arceusXButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    arceusXButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    arceusXButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    arceusXButton.Font = Enum.Font.SourceSansBold
+    arceusXButton.TextSize = 18
+    arceusXButton.Text = "Arceus X"
+    arceusXButton.Parent = parentFrame
+
+    arceusXButton.MouseButton1Click:Connect(function()
+        print("Đang tải Arceus X...")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3"))()
+    end)
+
+    -- Fly (New version)
+    local flyButton = Instance.new("TextButton")
+    flyButton.Name = "FlyButton"
+    flyButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    flyButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    flyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    flyButton.Font = Enum.Font.SourceSansBold
+    flyButton.TextSize = 18
+    flyButton.Text = "Fly"
+    flyButton.Parent = parentFrame
+
+    flyButton.MouseButton1Click:Connect(function()
+        print("Đang tải Fly...")
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Vehicle%20Fly%20Gui'))()
+    end)
+end)
+
+-- Tab 3: Công cụ
+createTab("Công cụ", function(parentFrame)
+    -- H4x
+    local h4xButton = Instance.new("TextButton")
+    h4xButton.Name = "H4xButton"
+    h4xButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    h4xButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    h4xButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    h4xButton.Font = Enum.Font.SourceSansBold
+    h4xButton.TextSize = 18
+    h4xButton.Text = "H4x"
+    h4xButton.Parent = parentFrame
+
+    h4xButton.MouseButton1Click:Connect(function()
+        print("Đang tải script H4x...")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/H4xScripts/Loader/refs/heads/main/loader.lua", true))()
+    end)
+
+    -- Lunor
+    local lunorButton = Instance.new("TextButton")
+    lunorButton.Name = "LunorButton"
+    lunorButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    lunorButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    lunorButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    lunorButton.Font = Enum.Font.SourceSansBold
+    lunorButton.TextSize = 18
+    lunorButton.Text = "Lunor"
+    lunorButton.Parent = parentFrame
+
+    lunorButton.MouseButton1Click:Connect(function()
+        print("Đang tải Lunor...")
+        loadstring(game:HttpGet("https://lunor.dev/loader"))()
+    end)
+
+    -- Airflow
+    local airflowButton = Instance.new("TextButton")
+    airflowButton.Name = "AirflowButton"
+    airflowButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    airflowButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    airflowButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    airflowButton.Font = Enum.Font.SourceSansBold
+    airflowButton.TextSize = 18
+    airflowButton.Text = "Airflow"
+    airflowButton.Parent = parentFrame
+
+    airflowButton.MouseButton1Click:Connect(function()
+        print("Đang tải Airflow...")
+        loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/255ac567ced3dcb9e69aa7e44c423f19.lua"))()
+    end)
+
+    -- Skull Hub
+    local skullHubButton = Instance.new("TextButton")
+    skullHubButton.Name = "SkullHubButton"
+    skullHubButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    skullHubButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    skullHubButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    skullHubButton.Font = Enum.Font.SourceSansBold
+    skullHubButton.TextSize = 18
+    skullHubButton.Text = "Skull Hub"
+    skullHubButton.Parent = parentFrame
+
+    skullHubButton.MouseButton1Click:Connect(function()
+        print("Đang tải Skull Hub...")
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/hungquan99/SkullHub/main/loader.lua'))()
+    end)
+
+    -- NPC Lock
+    local npcLockButton = Instance.new("TextButton")
+    npcLockButton.Name = "NPCLockButton"
+    npcLockButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    npcLockButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    npcLockButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    npcLockButton.Font = Enum.Font.SourceSansBold
+    npcLockButton.TextSize = 18
+    npcLockButton.Text = "NPC Lock"
+    npcLockButton.Parent = parentFrame
+
+    npcLockButton.MouseButton1Click:Connect(function()
+        print("Đang tải NPC Lock...")
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Dead-Rails-NPC-LOCK-32544"))()
+    end)
+
+    -- NatHub
+    local natHubButton = Instance.new("TextButton")
+    natHubButton.Name = "NatHubButton"
+    natHubButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    natHubButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    natHubButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    natHubButton.Font = Enum.Font.SourceSansBold
+    natHubButton.TextSize = 18
+    natHubButton.Text = "NatHub"
+    natHubButton.Parent = parentFrame
+
+    natHubButton.MouseButton1Click:Connect(function()
+        print("Đang tải NatHub...")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/ArdyBotzz/NatHub/refs/heads/master/NatHub.lua"))()
+    end)
+
+    -- Shader
+    local shaderButton = Instance.new("TextButton")
+    shaderButton.Name = "ShaderButton"
+    shaderButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    shaderButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    shaderButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    shaderButton.Font = Enum.Font.SourceSansBold
+    shaderButton.TextSize = 18
+    shaderButton.Text = "Shader"
+    shaderButton.Parent = parentFrame
+
+    shaderButton.MouseButton1Click:Connect(function()
+        print("Đang tải Shader...")
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/randomstring0/pshade-ultimate/refs/heads/main/src/cd.lua'))()
+    end)
+
+    -- Native
+    local nativeButton = Instance.new("TextButton")
+    nativeButton.Name = "NativeButton"
+    nativeButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    nativeButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    nativeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    nativeButton.Font = Enum.Font.SourceSansBold
+    nativeButton.TextSize = 18
+    nativeButton.Text = "Native"
+    nativeButton.Parent = parentFrame
+
+    nativeButton.MouseButton1Click:Connect(function()
+        print("Đang tải Native...")
+        loadstring(game:HttpGet("https://getnative.cc/script/loader"))()
+    end)
+
+    -- NoLag
+    local noLagButton = Instance.new("TextButton")
+    noLagButton.Name = "NoLagButton"
+    noLagButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    noLagButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    noLagButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    noLagButton.Font = Enum.Font.SourceSansBold
+    noLagButton.TextSize = 18
+    noLagButton.Text = "NoLag"
+    noLagButton.Parent = parentFrame
+
+    noLagButton.MouseButton1Click:Connect(function()
+        print("Đang tải NoLag...")
+        loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/NoLag-id/No-Lag-HUB/refs/heads/main/Loader/LoaderV1.lua"))()
+    end)
+
+    -- Limit Hub
+    local limitHubButton = Instance.new("TextButton")
+    limitHubButton.Name = "LimitHubButton"
+    limitHubButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    limitHubButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    limitHubButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    limitHubButton.Font = Enum.Font.SourceSansBold
+    limitHubButton.TextSize = 18
+    limitHubButton.Text = "Limit Hub"
+    limitHubButton.Parent = parentFrame
+
+    limitHubButton.MouseButton1Click:Connect(function()
+        print("Đang tải Limit Hub...")
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/FakeModz/LimitHub/refs/heads/main/LimitHub_Loader.lua')))()
+    end)
+
+    -- Speed Hub X
+    local speedHubXButton = Instance.new("TextButton")
+    speedHubXButton.Name = "SpeedHubXButton"
+    speedHubXButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    speedHubXButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    speedHubXButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    speedHubXButton.Font = Enum.Font.SourceSansBold
+    speedHubXButton.TextSize = 18
+    speedHubXButton.Text = "Speed Hub X"
+    speedHubXButton.Parent = parentFrame
+
+    speedHubXButton.MouseButton1Click:Connect(function()
+        print("Đang tải Speed Hub X...")
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Grow-a-Garden-Speed-Hub-X-Keyless-38062"))()
+    end)
+
+    -- ThunderZ
+    local thunderZButton = Instance.new("TextButton")
+    thunderZButton.Name = "ThunderZButton"
+    thunderZButton.Size = UDim2.new(0.9, 0, 0.15, 0)
+    thunderZButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    thunderZButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    thunderZButton.Font = Enum.Font.SourceSansBold
+    thunderZButton.TextSize = 18
+    thunderZButton.Text = "ThunderZ"
+    thunderZButton.Parent = parentFrame
+
+    thunderZButton.MouseButton1Click:Connect(function()
+        print("Đang tải ThunderZ...")
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/GaG/Main.lua'))()
+    end)
+end)
+
+-- Logic để đóng menu
+closeButton.MouseButton1Click:Connect(function()
+    menuFrame.Visible = false -- Ẩn menu
+    openButton.Visible = true -- Hiển thị nút mở
+end)
+
+-- Logic để mở menu
+openButton.MouseButton1Click:Connect(function()
+    menuFrame.Visible = true -- Hiển thị menu
+    openButton.Visible = false -- Ẩn nút mở
+end)
+
+-- Đảm bảo khung mật khẩu hiển thị ban đầu, menu chính và nút mở ẩn
+keyInputFrame.Visible = true
+menuFrame.Visible = false
+openButton.Visible = false
+
