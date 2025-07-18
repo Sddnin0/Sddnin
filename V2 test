@@ -4,6 +4,7 @@
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "MyUIMenu"
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.Enabled = true -- Đảm bảo ScreenGui được bật
 
 -- ====================================================================
 -- KHAI BÁO CÁC BIẾN UI CHÍNH Ở ĐẦU ĐỂ ĐẢM BẢO PHẠM VI TRUY CẬP
@@ -17,6 +18,7 @@ local tabContents = {} -- Bảng để lưu trữ các khung nội dung tab
 -- PHẦN MẬT KHẨU
 -- ====================================================================
 local keyInputFrame = Instance.new("Frame")
+keyInputFrame.Parent = screenGui -- Đặt Parent ngay lập tức
 keyInputFrame.Name = "KeyInputFrame"
 keyInputFrame.Size = UDim2.new(0.3, 0, 0.3, 0)
 keyInputFrame.Position = UDim2.new(0.35, 0, 0.35, 0)
@@ -24,7 +26,7 @@ keyInputFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 keyInputFrame.BorderSizePixel = 0
 keyInputFrame.Active = true
 keyInputFrame.Draggable = true
-keyInputFrame.Parent = screenGui
+keyInputFrame.ZIndex = 10 -- Đặt ZIndex cao để đảm bảo hiển thị trên cùng
 
 local keyInputCorner = Instance.new("UICorner")
 keyInputCorner.CornerRadius = UDim.new(0, 8)
@@ -86,6 +88,7 @@ local CORRECT_KEY = "Join discord"
 -- ====================================================================
 -- PHẦN MENU CHÍNH (đã có từ trước)
 -- ====================================================================
+menuFrame.Parent = screenGui -- Đặt Parent ngay lập tức
 menuFrame.Name = "MenuFrame"
 menuFrame.Size = UDim2.new(0.4, 0, 0.7, 0)
 menuFrame.Position = UDim2.new(0.3, 0, 0.15, 0)
@@ -93,8 +96,8 @@ menuFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 menuFrame.BorderSizePixel = 0
 menuFrame.Active = true
 menuFrame.Draggable = true
-menuFrame.Parent = screenGui
 menuFrame.Visible = false -- Ban đầu ẩn, chỉ hiển thị sau khi nhập đúng mật khẩu
+menuFrame.ZIndex = 5 -- ZIndex thấp hơn khung mật khẩu
 
 -- Thêm một UIStroke để tạo viền cho Frame
 local menuStroke = Instance.new("UIStroke")
@@ -148,6 +151,7 @@ closeButtonCorner.CornerRadius = UDim.new(0, 5)
 closeButtonCorner.Parent = closeButton
 
 -- Tạo nút mở menu (sẽ hiển thị khi menu bị đóng)
+openButton.Parent = screenGui -- Đặt Parent ngay lập tức
 openButton.Name = "OpenButton"
 openButton.Size = UDim2.new(0, 100, 0, 40)
 openButton.Position = UDim2.new(0.05, 0, 0.05, 0)
@@ -156,8 +160,8 @@ openButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 openButton.Font = Enum.Font.SourceSansBold
 openButton.TextSize = 18
 openButton.Text = "Mở Menu"
-openButton.Parent = screenGui
 openButton.Visible = false -- Ban đầu ẩn
+openButton.ZIndex = 5 -- ZIndex tương tự menuFrame
 
 -- Thêm một UICorner cho nút mở
 local openButtonCorner = Instance.new("UICorner")
@@ -676,3 +680,4 @@ end)
 keyInputFrame.Visible = true
 menuFrame.Visible = false
 openButton.Visible = false
+
