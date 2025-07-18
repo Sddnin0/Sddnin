@@ -1,9 +1,17 @@
--- Roblox UI Menu Script with Key System
+-- Roblox UI Menu Script with Key System Fixed
 
 -- Tạo một ScreenGui để chứa tất cả các phần tử UI của chúng ta
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "MyUIMenu"
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- ====================================================================
+-- KHAI BÁO CÁC BIẾN UI CHÍNH Ở ĐẦU ĐỂ ĐẢM BẢO PHẠM VI TRUY CẬP
+-- ====================================================================
+
+local menuFrame = Instance.new("Frame")
+local openButton = Instance.new("TextButton")
+local tabContents = {} -- Bảng để lưu trữ các khung nội dung tab
 
 -- ====================================================================
 -- PHẦN MẬT KHẨU
@@ -75,33 +83,9 @@ keyFeedbackLabel.Parent = keyInputFrame
 
 local CORRECT_KEY = "Join discord"
 
-submitKeyButton.MouseButton1Click:Connect(function()
-    local enteredKey = keyTextBox.Text
-    if enteredKey == CORRECT_KEY then
-        keyInputFrame.Visible = false -- Ẩn khung mật khẩu
-        menuFrame.Visible = true      -- Hiển thị menu chính
-        openButton.Visible = false    -- Ẩn nút mở (vì menu đã mở)
-        keyFeedbackLabel.Text = ""    -- Xóa thông báo lỗi
-        -- Kích hoạt tab đầu tiên khi menu được tải
-        if tabContents["Trang chủ"] then
-            tabContents["Trang chủ"].Visible = true
-            -- Cập nhật màu nút tab đầu tiên
-            for _, btn in pairs(tabBarFrame:GetChildren()) do
-                if btn:IsA("TextButton") and btn.Name == "Trang chủTabButton" then
-                    btn.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-                    break
-                end
-            end
-        end
-    else
-        keyFeedbackLabel.Text = "Mật khẩu sai! Vui lòng thử lại."
-    end
-end)
-
 -- ====================================================================
 -- PHẦN MENU CHÍNH (đã có từ trước)
 -- ====================================================================
-local menuFrame = Instance.new("Frame")
 menuFrame.Name = "MenuFrame"
 menuFrame.Size = UDim2.new(0.4, 0, 0.7, 0)
 menuFrame.Position = UDim2.new(0.3, 0, 0.15, 0)
@@ -164,7 +148,6 @@ closeButtonCorner.CornerRadius = UDim.new(0, 5)
 closeButtonCorner.Parent = closeButton
 
 -- Tạo nút mở menu (sẽ hiển thị khi menu bị đóng)
-local openButton = Instance.new("TextButton")
 openButton.Name = "OpenButton"
 openButton.Size = UDim2.new(0, 100, 0, 40)
 openButton.Position = UDim2.new(0.05, 0, 0.05, 0)
@@ -210,9 +193,6 @@ contentFrameContainer.Parent = menuFrame
 local contentCorner = Instance.new("UICorner")
 contentCorner.CornerRadius = UDim.new(0, 8)
 contentCorner.Parent = contentFrameContainer
-
--- Bảng để lưu trữ các khung nội dung tab
-local tabContents = {}
 
 -- Hàm để tạo nút tab và khung nội dung
 local function createTab(tabName, content)
@@ -289,7 +269,36 @@ local function createTab(tabName, content)
     return tabButton
 end
 
--- Định nghĩa các tab và nội dung của chúng
+-- ====================================================================
+-- LOGIC XÁC THỰC MẬT KHẨU
+-- ====================================================================
+submitKeyButton.MouseButton1Click:Connect(function()
+    local enteredKey = keyTextBox.Text
+    if enteredKey == CORRECT_KEY then
+        keyInputFrame.Visible = false -- Ẩn khung mật khẩu
+        menuFrame.Visible = true      -- Hiển thị menu chính
+        openButton.Visible = false    -- Ẩn nút mở (vì menu đã mở)
+        keyFeedbackLabel.Text = ""    -- Xóa thông báo lỗi
+        -- Kích hoạt tab đầu tiên khi menu được tải
+        if tabContents["Trang chủ"] then
+            tabContents["Trang chủ"].Visible = true
+            -- Cập nhật màu nút tab đầu tiên
+            for _, btn in pairs(tabBarFrame:GetChildren()) do
+                if btn:IsA("TextButton") and btn.Name == "Trang chủTabButton" then
+                    btn.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
+                    break
+                end
+            end
+        end
+    else
+        keyFeedbackLabel.Text = "Mật khẩu sai! Vui lòng thử lại."
+    end
+end)
+
+
+-- ====================================================================
+-- ĐỊNH NGHĨA CÁC TAB VÀ NỘI DUNG CỦA CHÚNG
+-- ====================================================================
 -- Tab 1: Trang chủ
 createTab("Trang chủ", function(parentFrame)
     local welcomeLabel = Instance.new("TextLabel")
@@ -667,4 +676,3 @@ end)
 keyInputFrame.Visible = true
 menuFrame.Visible = false
 openButton.Visible = false
-
