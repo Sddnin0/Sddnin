@@ -1,104 +1,110 @@
--- LocalScript (Đặt trong StarterPlayerScripts hoặc ScreenGui)
+-- Định nghĩa khóa chính xác của bạn tại đây
+local CORRECT_KEY = "Sddnin" -- ĐÃ THAY THẾ KHÓA BẰNG "Sddnin"
 
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local Player = game.Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
 
--- Tạo ScreenGui để chứa menu
+-- Tạo ScreenGui
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "CuteMenuGui"
+ScreenGui.Name = "Key_Input_UI"
 ScreenGui.Parent = PlayerGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+ScreenGui.ResetOnSpawn = false -- Giữ UI sau khi hồi sinh
 
--- Tạo Frame làm nền menu
-local MenuFrame = Instance.new("Frame")
-MenuFrame.Name = "MenuBackground"
-MenuFrame.Size = UDim2.new(0.3, 0, 0.5, 0) -- Kích thước menu (30% chiều rộng, 50% chiều cao)
-MenuFrame.Position = UDim2.new(0.35, 0, 0.25, 0) -- Vị trí menu (ở giữa màn hình)
-MenuFrame.BackgroundColor3 = Color3.fromRGB(255, 220, 230) -- Màu hồng pastel
-MenuFrame.BorderColor3 = Color3.fromRGB(255, 180, 200) -- Màu viền đậm hơn
-MenuFrame.BorderSizePixel = 3
-MenuFrame.Parent = ScreenGui
+-- Tạo Frame chính
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "KeyInputFrame"
+MainFrame.Size = UDim2.new(0.3, 0, 0.2, 0) -- Kích thước khung
+MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0) -- Vị trí khung (giữa màn hình)
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+MainFrame.BorderColor3 = Color3.fromRGB(20, 20, 20)
+MainFrame.BorderSizePixel = 2
+MainFrame.Parent = ScreenGui
 
--- Thêm Corner cho Frame để làm tròn góc
-local UICorner = Instance.new("UICorner")
-UICorner.CornerRadius = UDim.new(0, 15) -- Độ cong của góc
-UICorner.Parent = MenuFrame
+-- Bo góc cho Frame
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(0, 8)
+Corner.Parent = MainFrame
 
--- Tạo TextLabel làm tiêu đề menu
+-- Tiêu đề
 local TitleLabel = Instance.new("TextLabel")
-TitleLabel.Name = "MenuTitle"
-TitleLabel.Size = UDim2.new(0.9, 0, 0.2, 0)
-TitleLabel.Position = UDim2.new(0.05, 0, 0.05, 0)
-TitleLabel.BackgroundColor3 = Color3.new(1, 1, 1) -- Màu trắng
+TitleLabel.Name = "TitleLabel"
+TitleLabel.Size = UDim2.new(1, 0, 0.25, 0)
+TitleLabel.Position = UDim2.new(0, 0, 0, 0)
 TitleLabel.BackgroundTransparency = 1
-TitleLabel.Text = "Sddnin Cute" -- Đã thay đổi
-TitleLabel.TextColor3 = Color3.fromRGB(100, 50, 70) -- Màu chữ tím than
-TitleLabel.Font = Enum.Font.FredokaOne -- Phông chữ dễ thương
+TitleLabel.Font = Enum.Font.SourceSansBold
+TitleLabel.Text = "Nhập Khóa để Tiếp Tục"
+TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleLabel.TextSize = 24
-TitleLabel.TextScaled = true
-TitleLabel.Parent = MenuFrame
+TitleLabel.Parent = MainFrame
 
--- Thêm UILineLayout để sắp xếp các nút
-local UIListLayout = Instance.new("UIListLayout")
-UIListLayout.Padding = UDim.new(0, 10) -- Khoảng cách giữa các nút
-UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-UIListLayout.Parent = MenuFrame
+-- Ô nhập khóa
+local KeyTextBox = Instance.new("TextBox")
+KeyTextBox.Name = "KeyTextBox"
+KeyTextBox.Size = UDim2.new(0.8, 0, 0.2, 0)
+KeyTextBox.Position = UDim2.new(0.5, 0, 0.4, 0)
+KeyTextBox.AnchorPoint = Vector2.new(0.5, 0)
+KeyTextBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+KeyTextBox.BorderColor3 = Color3.fromRGB(30, 30, 30)
+KeyTextBox.BorderSizePixel = 1
+KeyTextBox.Font = Enum.Font.SourceSansSemibold
+KeyTextBox.PlaceholderText = "Nhập khóa của bạn ở đây..."
+KeyTextBox.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
+KeyTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+KeyTextBox.TextSize = 20
+KeyTextBox.TextXAlignment = Enum.TextXAlignment.Left
+KeyTextBox.TextYAlignment = Enum.TextYAlignment.Center
+KeyTextBox.ClearTextOnFocus = false
+KeyTextBox.Parent = MainFrame
 
--- Hàm tạo nút dễ thương
-local function createCuteButton(text, yPosition)
-    local Button = Instance.new("TextButton")
-    Button.Size = UDim2.new(0.8, 0, 0.15, 0)
-    Button.BackgroundColor3 = Color3.fromRGB(200, 255, 220) -- Màu xanh mint pastel
-    Button.BorderColor3 = Color3.fromRGB(150, 200, 170)
-    Button.BorderSizePixel = 2
-    Button.Text = text
-    Button.TextColor3 = Color3.fromRGB(50, 100, 70)
-    Button.Font = Enum.Font.FredokaOne
-    Button.TextSize = 20
-    Button.TextScaled = true
-    Button.Parent = MenuFrame
+-- Padding cho TextBox
+local KeyTextBoxPadding = Instance.new("UIPadding")
+KeyTextBoxPadding.PaddingLeft = UDim.new(0, 10)
+KeyTextBoxPadding.PaddingRight = UDim.new(0, 10)
+KeyTextBoxPadding.Parent = KeyTextBox
 
-    local ButtonUICorner = Instance.new("UICorner")
-    ButtonUICorner.CornerRadius = UDim.new(0, 10)
-    ButtonUICorner.Parent = Button
+-- Nút gửi khóa
+local SubmitButton = Instance.new("TextButton")
+SubmitButton.Name = "SubmitButton"
+SubmitButton.Size = UDim2.new(0.4, 0, 0.2, 0)
+SubmitButton.Position = UDim2.new(0.5, 0, 0.7, 0)
+SubmitButton.AnchorPoint = Vector2.new(0.5, 0)
+SubmitButton.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
+SubmitButton.BorderColor3 = Color3.fromRGB(50, 100, 150)
+SubmitButton.BorderSizePixel = 1
+SubmitButton.Font = Enum.Font.SourceSansBold
+SubmitButton.Text = "Gửi Khóa"
+SubmitButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+SubmitButton.TextSize = 20
+SubmitButton.Parent = MainFrame
 
-    -- Hiệu ứng khi di chuột qua nút
-    Button.MouseEnter:Connect(function()
-        Button:TweenSize(UDim2.new(0.85, 0, 0.17, 0), "Out", "Quad", 0.1, true)
-        Button.BackgroundColor3 = Color3.fromRGB(220, 255, 240) -- Màu sáng hơn khi hover
-    end)
+-- Bo góc cho Button
+local ButtonCorner = Instance.new("UICorner")
+ButtonCorner.CornerRadius = UDim.new(0, 6)
+ButtonCorner.Parent = SubmitButton
 
-    Button.MouseLeave:Connect(function()
-        Button:TweenSize(UDim2.new(0.8, 0, 0.15, 0), "Out", "Quad", 0.1, true)
-        Button.BackgroundColor3 = Color3.fromRGB(200, 255, 220) -- Trở lại màu cũ
-    end)
+-- Xử lý sự kiện khi nhấn nút
+SubmitButton.MouseButton1Click:Connect(function()
+    local enteredKey = KeyTextBox.Text
 
-    return Button
-end
-
--- Tạo các nút menu
-local ScriptButton = createCuteButton("Script") -- Đã thay đổi
-ScriptButton.Activated:Connect(function()
-    print("Nút Script đã được nhấp!")
-    -- Thêm logic game của bạn ở đây
+    if enteredKey == CORRECT_KEY then
+        print("Key accepted! Loading script...")
+        -- Hủy UI sau khi nhập đúng khóa
+        ScreenGui:Destroy()
+        -- Tải và thực thi script từ GitHub
+        loadstring(game:HttpGet(("https://raw.githubusercontent.com/Sddnin0/Sddnin/refs/heads/main/V2%20test")))()
+    else
+        print("Incorrect key!")
+        -- Hiển thị thông báo lỗi
+        KeyTextBox.Text = "Khóa sai!"
+        KeyTextBox.TextColor3 = Color3.fromRGB(255, 0, 0)
+        -- Đặt lại văn bản và màu sắc sau một khoảng thời gian
+        task.wait(1.5)
+        KeyTextBox.Text = ""
+        KeyTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    end
 end)
 
-local MiscButton = createCuteButton("Misc") -- Đã thay đổi
-MiscButton.Activated:Connect(function()
-    print("Nút Misc đã được nhấp!")
-    -- Thêm logic cài đặt của bạn ở đây
-end)
-
-local DiscordButton = createCuteButton("Discord") -- Đã thay đổi
-DiscordButton.Activated:Connect(function()
-    print("Nút Discord đã được nhấp!")
-    -- Thêm logic thông tin của bạn ở đây
-end)
-
-local ExitButton = createCuteButton("Thoát")
-ExitButton.Activated:Connect(function()
-    print("Nút Thoát đã được nhấp!")
-    -- Thêm logic thoát game hoặc đóng menu của bạn ở đây
-    ScreenGui:Destroy() -- Đóng menu
-end)
+-- Để UI luôn hiển thị trên các màn hình khác
+ScreenGui.AlwaysOnTop = true
