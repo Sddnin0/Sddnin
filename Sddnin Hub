@@ -1,0 +1,145 @@
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+local playerGui = localPlayer:WaitForChild("PlayerGui")
+
+-- BIẾN TÙY CHỈNH
+local menuTitle = "Sddnin"
+local openButtonText = "Mở Menu"
+local menuWidth = 400
+local menuHeight = 300
+
+-- Tạo ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "MyMenuGui"
+screenGui.ResetOnSpawn = false
+
+-- Tạo Khung Menu Chính
+local menuFrame = Instance.new("Frame")
+menuFrame.Name = "MenuFrame"
+menuFrame.Size = UDim2.new(0, menuWidth, 0, menuHeight)
+menuFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+menuFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+menuFrame.BackgroundColor3 = Color3.fromRGB(35, 37, 40)
+menuFrame.BorderColor3 = Color3.fromRGB(20, 20, 20)
+menuFrame.BorderSizePixel = 2
+menuFrame.Visible = false
+menuFrame.Parent = screenGui
+
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 12)
+uiCorner.Parent = menuFrame
+
+-- Tạo Tiêu đề
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Name = "TitleLabel"
+titleLabel.Size = UDim2.new(1, 0, 0, 40)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.BackgroundColor3 = Color3.fromRGB(48, 51, 56)
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.Font = Enum.Font.SourceSansBold
+titleLabel.TextSize = 20
+titleLabel.Text = menuTitle
+titleLabel.Parent = menuFrame
+
+local titleCorner = Instance.new("UICorner")
+titleCorner.CornerRadius = UDim.new(0, 12)
+titleCorner.Parent = titleLabel
+
+-- Tạo Nút Đóng
+local closeButton = Instance.new("TextButton")
+closeButton.Name = "CloseButton"
+closeButton.Size = UDim2.new(0, 30, 0, 30)
+closeButton.Position = UDim2.new(1, -35, 0, 5)
+closeButton.BackgroundColor3 = Color3.fromRGB(231, 76, 60)
+closeButton.Text = "X"
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.Font = Enum.Font.SourceSansBold
+closeButton.TextSize = 18
+closeButton.Parent = titleLabel
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 6)
+closeCorner.Parent = closeButton
+
+-- Nút Chức năng 1 (Sddnin free)
+local functionButton1 = Instance.new("TextButton")
+functionButton1.Name = "FunctionButton1"
+functionButton1.Size = UDim2.new(0.8, 0, 0, 50)
+functionButton1.Position = UDim2.new(0.5, 0, 0, 70)
+functionButton1.AnchorPoint = Vector2.new(0.5, 0)
+functionButton1.BackgroundColor3 = Color3.fromRGB(52, 152, 219)
+functionButton1.TextColor3 = Color3.fromRGB(255, 255, 255)
+functionButton1.Font = Enum.Font.SourceSans
+functionButton1.TextSize = 18
+functionButton1.Text = "Sddnin (free)"
+functionButton1.Parent = menuFrame
+
+local button1Corner = Instance.new("UICorner")
+button1Corner.CornerRadius = UDim.new(0, 8)
+button1Corner.Parent = functionButton1
+
+-- Nút Chức năng 2 (Sddnin Key)
+local functionButton2 = Instance.new("TextButton")
+functionButton2.Name = "FunctionButton2"
+functionButton2.Size = UDim2.new(0.8, 0, 0, 50)
+functionButton2.Position = UDim2.new(0.5, 0, 0, 140)
+functionButton2.AnchorPoint = Vector2.new(0.5, 0)
+functionButton2.BackgroundColor3 = Color3.fromRGB(46, 204, 113)
+functionButton2.TextColor3 = Color3.fromRGB(255, 255, 255)
+functionButton2.Font = Enum.Font.SourceSans
+functionButton2.TextSize = 18
+functionButton2.Text = "Sddnin (Key)"
+functionButton2.Parent = menuFrame
+
+local button2Corner = Instance.new("UICorner")
+button2Corner.CornerRadius = UDim.new(0, 8)
+button2Corner.Parent = functionButton2
+
+-- Nút Mở Menu
+local openButton = Instance.new("TextButton")
+openButton.Name = "OpenMenuButton"
+openButton.Size = UDim2.new(0, 150, 0, 50)
+openButton.Position = UDim2.new(0.5, 0, 0, 20)
+openButton.AnchorPoint = Vector2.new(0.5, 0)
+openButton.BackgroundColor3 = Color3.fromRGB(99, 110, 114)
+openButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+openButton.Font = Enum.Font.SourceSansBold
+openButton.TextSize = 20
+openButton.Text = openButtonText
+openButton.Parent = screenGui
+
+local openCorner = Instance.new("UICorner")
+openCorner.CornerRadius = UDim.new(0, 8)
+openCorner.Parent = openButton
+
+screenGui.Parent = playerGui
+
+-- LOGIC
+local function toggleMenu()
+	menuFrame.Visible = not menuFrame.Visible
+end
+
+openButton.MouseButton1Click:Connect(toggleMenu)
+closeButton.MouseButton1Click:Connect(toggleMenu)
+
+functionButton1.MouseButton1Click:Connect(function()
+	-- THỰC THI SCRIPT Sddnin (free)
+	local success, err = pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Sddnin0/Sddnin/refs/heads/main/Hub"))()
+	end)
+	if not success then
+		warn("Lỗi khi chạy script Sddnin (free): " .. err)
+	end
+	menuFrame.Visible = false
+end)
+
+functionButton2.MouseButton1Click:Connect(function()
+	-- THỰC THI SCRIPT Sddnin (Key) -- Đã cập nhật
+	local success, err = pcall(function()
+		loadstring(game:HttpGet(("https://raw.githubusercontent.com/Sddnin0/Sddnin/refs/heads/main/V2")))()
+	end)
+	if not success then
+		warn("Lỗi khi chạy script Sddnin (Key): " .. err)
+	end
+	menuFrame.Visible = false
+end)
