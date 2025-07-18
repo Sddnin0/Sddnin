@@ -1,0 +1,104 @@
+-- LocalScript (Đặt trong StarterPlayerScripts hoặc ScreenGui)
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+-- Tạo ScreenGui để chứa menu
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "CuteMenuGui"
+ScreenGui.Parent = PlayerGui
+
+-- Tạo Frame làm nền menu
+local MenuFrame = Instance.new("Frame")
+MenuFrame.Name = "MenuBackground"
+MenuFrame.Size = UDim2.new(0.3, 0, 0.5, 0) -- Kích thước menu (30% chiều rộng, 50% chiều cao)
+MenuFrame.Position = UDim2.new(0.35, 0, 0.25, 0) -- Vị trí menu (ở giữa màn hình)
+MenuFrame.BackgroundColor3 = Color3.fromRGB(255, 220, 230) -- Màu hồng pastel
+MenuFrame.BorderColor3 = Color3.fromRGB(255, 180, 200) -- Màu viền đậm hơn
+MenuFrame.BorderSizePixel = 3
+MenuFrame.Parent = ScreenGui
+
+-- Thêm Corner cho Frame để làm tròn góc
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 15) -- Độ cong của góc
+UICorner.Parent = MenuFrame
+
+-- Tạo TextLabel làm tiêu đề menu
+local TitleLabel = Instance.new("TextLabel")
+TitleLabel.Name = "MenuTitle"
+TitleLabel.Size = UDim2.new(0.9, 0, 0.2, 0)
+TitleLabel.Position = UDim2.new(0.05, 0, 0.05, 0)
+TitleLabel.BackgroundColor3 = Color3.new(1, 1, 1) -- Màu trắng
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Text = "Sddnin Cute" -- Đã thay đổi
+TitleLabel.TextColor3 = Color3.fromRGB(100, 50, 70) -- Màu chữ tím than
+TitleLabel.Font = Enum.Font.FredokaOne -- Phông chữ dễ thương
+TitleLabel.TextSize = 24
+TitleLabel.TextScaled = true
+TitleLabel.Parent = MenuFrame
+
+-- Thêm UILineLayout để sắp xếp các nút
+local UIListLayout = Instance.new("UIListLayout")
+UIListLayout.Padding = UDim.new(0, 10) -- Khoảng cách giữa các nút
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+UIListLayout.Parent = MenuFrame
+
+-- Hàm tạo nút dễ thương
+local function createCuteButton(text, yPosition)
+    local Button = Instance.new("TextButton")
+    Button.Size = UDim2.new(0.8, 0, 0.15, 0)
+    Button.BackgroundColor3 = Color3.fromRGB(200, 255, 220) -- Màu xanh mint pastel
+    Button.BorderColor3 = Color3.fromRGB(150, 200, 170)
+    Button.BorderSizePixel = 2
+    Button.Text = text
+    Button.TextColor3 = Color3.fromRGB(50, 100, 70)
+    Button.Font = Enum.Font.FredokaOne
+    Button.TextSize = 20
+    Button.TextScaled = true
+    Button.Parent = MenuFrame
+
+    local ButtonUICorner = Instance.new("UICorner")
+    ButtonUICorner.CornerRadius = UDim.new(0, 10)
+    ButtonUICorner.Parent = Button
+
+    -- Hiệu ứng khi di chuột qua nút
+    Button.MouseEnter:Connect(function()
+        Button:TweenSize(UDim2.new(0.85, 0, 0.17, 0), "Out", "Quad", 0.1, true)
+        Button.BackgroundColor3 = Color3.fromRGB(220, 255, 240) -- Màu sáng hơn khi hover
+    end)
+
+    Button.MouseLeave:Connect(function()
+        Button:TweenSize(UDim2.new(0.8, 0, 0.15, 0), "Out", "Quad", 0.1, true)
+        Button.BackgroundColor3 = Color3.fromRGB(200, 255, 220) -- Trở lại màu cũ
+    end)
+
+    return Button
+end
+
+-- Tạo các nút menu
+local ScriptButton = createCuteButton("Script") -- Đã thay đổi
+ScriptButton.Activated:Connect(function()
+    print("Nút Script đã được nhấp!")
+    -- Thêm logic game của bạn ở đây
+end)
+
+local MiscButton = createCuteButton("Misc") -- Đã thay đổi
+MiscButton.Activated:Connect(function()
+    print("Nút Misc đã được nhấp!")
+    -- Thêm logic cài đặt của bạn ở đây
+end)
+
+local DiscordButton = createCuteButton("Discord") -- Đã thay đổi
+DiscordButton.Activated:Connect(function()
+    print("Nút Discord đã được nhấp!")
+    -- Thêm logic thông tin của bạn ở đây
+end)
+
+local ExitButton = createCuteButton("Thoát")
+ExitButton.Activated:Connect(function()
+    print("Nút Thoát đã được nhấp!")
+    -- Thêm logic thoát game hoặc đóng menu của bạn ở đây
+    ScreenGui:Destroy() -- Đóng menu
+end)
