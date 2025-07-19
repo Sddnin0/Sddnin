@@ -54,7 +54,7 @@ GlobalSearchBox.TextSize = 16
 GlobalSearchBox.TextScaled = false
 GlobalSearchBox.Parent = MenuFrame
 
--- Khung chứa các nút tab (Script, Misc, Old, Thoát)
+-- Khung chứa các nút tab (Script, BoxTool, Misc, Thoát)
 local TabButtonsContainer = Instance.new("Frame")
 TabButtonsContainer.Name = "TabButtonsContainer"
 TabButtonsContainer.Size = UDim2.new(0.9, 0, 0.08, 0) -- Kích thước khung nút
@@ -145,8 +145,8 @@ end
 
 -- Tạo các nút tab
 local ScriptButtonTab = createCuteTabButton(TabButtonsContainer, "Script")
+local BoxToolButtonTab = createCuteTabButton(TabButtonsContainer, "BoxTool")
 local MiscButtonTab = createCuteTabButton(TabButtonsContainer, "Misc")
-local OldButtonTab = createCuteTabButton(TabButtonsContainer, "Old") -- Đã đổi tên
 local ExitButtonTab = createCuteTabButton(TabButtonsContainer, "Thoát")
 
 -- Khung nội dung cho tab Script (ScrollingFrame)
@@ -195,7 +195,48 @@ for _, scriptInfo in ipairs(scriptsData) do
     scriptButtons[scriptInfo.Name] = scriptButton -- Lưu trữ nút theo tên để tìm kiếm
 end
 
--- Khung nội dung cho tab Misc (ScrollingFrame)
+-- Khung nội dung cho tab BoxTool (trước đây là Misc)
+local BoxToolContentScroll = Instance.new("ScrollingFrame")
+BoxToolContentScroll.Name = "BoxToolContent"
+BoxToolContentScroll.Size = UDim2.new(1, 0, 1, 0)
+BoxToolContentScroll.Position = UDim2.new(0, 0, 0, 0)
+BoxToolContentScroll.BackgroundTransparency = 1
+BoxToolContentScroll.Parent = TabContentContainer
+BoxToolContentScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+BoxToolContentScroll.ScrollBarThickness = 6
+BoxToolContentScroll.VerticalScrollBarInset = Enum.ScrollBarInset.Always
+BoxToolContentScroll.ScrollBarImageColor3 = Color3.fromRGB(180, 210, 230)
+BoxToolContentScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+BoxToolContentScroll.Visible = false -- Ban đầu ẩn
+
+local BoxToolContentLayout = Instance.new("UIListLayout")
+BoxToolContentLayout.Padding = UDim.new(0, 8)
+BoxToolContentLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+BoxToolContentLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+BoxToolContentLayout.Parent = BoxToolContentScroll
+BoxToolContentLayout.FillDirection = Enum.FillDirection.Vertical
+
+-- Thêm các script vào tab BoxTool
+local boxToolScriptsData = {
+    {Name = "R15 Emote", Code = 'loadstring(game:HttpGetAsync("https://gist.githubusercontent.com/RedZenXYZ/3da6af1961efa275de6c3c2a6dbace03/raw/bb027f99cec0ea48ef9c5eabfb9116ddff20633d/FE%2520Emotes%2520Gui"))()'},
+    {Name = "Arceus X", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3"))()'},
+    {Name = "Shader", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/pshade-ultimate/refs/heads/main/src/cd.lua"))()'},
+    {Name = "Fly", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Vehicle%20Fly%20Gui"))()'},
+    {Name = "Infinite Yield", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()'},
+    {Name = "Nameless Admin", Code = 'loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-admin-15646"))()'},
+}
+
+local boxToolScriptButtons = {}
+for _, scriptInfo in ipairs(boxToolScriptsData) do
+    local scriptButton = createCuteScriptButton(BoxToolContentScroll, scriptInfo.Name)
+    scriptButton.Activated:Connect(function()
+        warn("Executing BoxTool script:", scriptInfo.Name)
+        loadstring(scriptInfo.Code)()
+    end)
+    boxToolScriptButtons[scriptInfo.Name] = scriptButton
+end
+
+-- Khung nội dung cho tab Misc (trước đây là Discord)
 local MiscContentScroll = Instance.new("ScrollingFrame")
 MiscContentScroll.Name = "MiscContent"
 MiscContentScroll.Size = UDim2.new(1, 0, 1, 0)
@@ -216,30 +257,124 @@ MiscContentLayout.VerticalAlignment = Enum.VerticalAlignment.Top
 MiscContentLayout.Parent = MiscContentScroll
 MiscContentLayout.FillDirection = Enum.FillDirection.Vertical
 
--- Thêm các script vào tab Misc
+-- Thêm các script vào tab Misc (bao gồm Noclip, Speed và Teleport)
 local miscScriptsData = {
-    {Name = "R15 Emote", Code = 'loadstring(game:HttpGetAsync("https://gist.githubusercontent.com/RedZenXYZ/3da6af1961efa275de6c3c2a6dbace03/raw/bb027f99cec0ea48ef9c5eabfb9116ddff20633d/FE%2520Emotes%2520Gui"))()'},
-    {Name = "Arceus X", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3"))()'},
-    {Name = "Shader", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/pshade-ultimate/refs/heads/main/src/cd.lua"))()'},
-    {Name = "Fly", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Vehicle%20Fly%20Gui"))()'},
-    {Name = "Infinite Yield", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()'},
-    {Name = "Nameless Admin", Code = 'loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-admin-15646"))()'},
+    {Name = "Noclip (Bật/Tắt)", Code = [[
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+
+        -- Sử dụng biến _G để duy trì trạng thái Noclip qua các lần nhấp
+        _G.noclipEnabled = _G.noclipEnabled or false
+
+        local function applyNoclip(enabled)
+            for _, part in ipairs(character:GetDescendants()) do
+                -- Chỉ thay đổi CanCollide cho BasePart và nếu nó có CanCollide ban đầu
+                if part:IsA("BasePart") and part.CanCollide ~= nil then
+                    part.CanCollide = not enabled
+                end
+            end
+            -- Đảm bảo HumanoidRootPart cũng được xử lý
+            if character and character:FindFirstChild("HumanoidRootPart") then
+                character.HumanoidRootPart.CanCollide = not enabled
+            end
+        end
+
+        _G.noclipEnabled = not _G.noclipEnabled
+        applyNoclip(_G.noclipEnabled)
+        warn("Noclip:", _G.noclipEnabled and "Bật" or "Tắt")
+    ]]},
+    {Name = "Speed (Bật/Tắt)", Code = [[
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+        if humanoid then
+            -- Sử dụng biến _G để duy trì trạng thái Speed qua các lần nhấp
+            _G.speedEnabled = _G.speedEnabled or false
+            _G.originalWalkSpeed = _G.originalWalkSpeed or humanoid.WalkSpeed -- Lưu tốc độ gốc
+
+            if not _G.speedEnabled then
+                -- Bật Speed: Đặt tốc độ cao hơn
+                humanoid.WalkSpeed = 50 -- Bạn có thể thay đổi giá trị này
+                warn("Speed: Bật (Tốc độ:", humanoid.WalkSpeed .. ")")
+            else
+                -- Tắt Speed: Trở về tốc độ gốc
+                humanoid.WalkSpeed = _G.originalWalkSpeed
+                warn("Speed: Tắt (Tốc độ:", humanoid.WalkSpeed .. ")")
+            end
+            _G.speedEnabled = not _G.speedEnabled
+        else
+            warn("Không tìm thấy Humanoid trong nhân vật.")
+        end
+    ]]},
 }
 
-local miscScriptButtons = {} -- Bảng để lưu trữ các nút script misc
-
+local miscScriptButtons = {} -- Bảng để lưu trữ các nút script Misc mới
 for _, scriptInfo in ipairs(miscScriptsData) do
     local scriptButton = createCuteScriptButton(MiscContentScroll, scriptInfo.Name)
     scriptButton.Activated:Connect(function()
-        warn("Executing misc script:", scriptInfo.Name)
+        warn("Executing Misc script:", scriptInfo.Name)
         loadstring(scriptInfo.Code)()
     end)
     miscScriptButtons[scriptInfo.Name] = scriptButton
 end
 
+-- --- Bắt đầu phần Dịch chuyển đến người chơi khác ---
+-- Tạo ô nhập tên người chơi
+local TargetPlayerNameInput = Instance.new("TextBox")
+TargetPlayerNameInput.Name = "TargetPlayerNameInput"
+TargetPlayerNameInput.Size = UDim2.new(0.95, 0, 0, 40) -- Kích thước cố định
+TargetPlayerNameInput.PlaceholderText = "Nhập tên người chơi để dịch chuyển..."
+TargetPlayerNameInput.Text = ""
+TargetPlayerNameInput.BackgroundColor3 = Color3.fromRGB(250, 255, 250)
+TargetPlayerNameInput.BorderColor3 = Color3.fromRGB(150, 200, 170)
+TargetPlayerNameInput.BorderSizePixel = 1
+TargetPlayerNameInput.TextColor3 = Color3.fromRGB(50, 80, 60)
+TargetPlayerNameInput.Font = Enum.Font.FredokaOne
+TargetPlayerNameInput.TextSize = 16
+TargetPlayerNameInput.TextScaled = false
+TargetPlayerNameInput.Parent = MiscContentScroll
+
+local TargetPlayerNameInputCorner = Instance.new("UICorner")
+TargetPlayerNameInputCorner.CornerRadius = UDim.new(0, 6)
+TargetPlayerNameInputCorner.Parent = TargetPlayerNameInput
+
+-- Tạo nút Dịch chuyển
+local TeleportButton = createCuteScriptButton(MiscContentScroll, "Dịch chuyển")
+TeleportButton.Name = "TeleportButton"
+TeleportButton.Activated:Connect(function()
+    local targetPlayerName = TargetPlayerNameInput.Text
+    if targetPlayerName and targetPlayerName ~= "" then
+        local targetPlayer = Players:FindFirstChild(targetPlayerName)
+        if targetPlayer then
+            local targetCharacter = targetPlayer.Character
+            if targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart") then
+                local localCharacter = LocalPlayer.Character
+                if localCharacter and localCharacter:FindFirstChild("HumanoidRootPart") then
+                    localCharacter.HumanoidRootPart.CFrame = targetCharacter.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0) -- Dịch lên một chút để tránh kẹt
+                    warn("Đã dịch chuyển đến:", targetPlayerName)
+                else
+                    warn("Không tìm thấy nhân vật của bạn.")
+                end
+            else
+                warn("Không tìm thấy nhân vật hoặc HumanoidRootPart của người chơi mục tiêu.")
+            end
+        else
+            warn("Không tìm thấy người chơi có tên:", targetPlayerName)
+        end
+    else
+        warn("Vui lòng nhập tên người chơi để dịch chuyển.")
+    end
+end)
+
+-- Thêm nút dịch chuyển vào danh sách để tìm kiếm
+miscScriptButtons[TeleportButton.Name] = TeleportButton
+-- --- Kết thúc phần Dịch chuyển đến người chơi khác ---
+
+
 -- Biến theo dõi tab hiện đang hoạt động
 local currentActiveTabContent = ScriptContentScroll
-local currentActiveScriptButtons = {} -- Để tìm kiếm các nút của tab hiện tại
+local currentActiveScriptButtons = scriptButtons -- Khởi tạo với scriptButtons
 
 -- Hàm chuyển đổi tab
 local function switchTab(newTabContentFrame, buttonList)
@@ -272,17 +407,17 @@ end)
 -- Kết nối sự kiện nhấp cho các nút tab
 ScriptButtonTab.Activated:Connect(function()
     warn("Tab Script đã được nhấp!")
-    switchTab(ScriptContentScroll, scriptButtons) -- Truyền scriptButtons để tìm kiếm
+    switchTab(ScriptContentScroll, scriptButtons)
+end)
+
+BoxToolButtonTab.Activated:Connect(function()
+    warn("Tab BoxTool đã được nhấp!")
+    switchTab(BoxToolContentScroll, boxToolScriptButtons)
 end)
 
 MiscButtonTab.Activated:Connect(function()
     warn("Tab Misc đã được nhấp!")
-    switchTab(MiscContentScroll, miscScriptButtons) -- Truyền miscScriptButtons để tìm kiếm
-end)
-
-OldButtonTab.Activated:Connect(function() -- Đã đổi tên và cập nhật sự kiện
-    warn("Nút Old đã được nhấp! Đang tải script Sddnin Hub...")
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Sddnin0/Sddnin/refs/heads/main/Hub"))()
+    switchTab(MiscContentScroll, miscScriptButtons)
 end)
 
 ExitButtonTab.Activated:Connect(function()
@@ -292,3 +427,4 @@ end)
 
 -- Đảm bảo tab Script hiển thị đúng khi khởi tạo và có danh sách nút để tìm kiếm
 switchTab(ScriptContentScroll, scriptButtons)
+
