@@ -1,463 +1,429 @@
-loadstring(game:HttpGet(("https://raw.githubusercontent.com/daucobonhi/Ui-Redz-V2/refs/heads/main/UiREDzV2.lua")))()
+-- LocalScript (Đặt trong StarterPlayerScripts hoặc ScreenGui)
 
-       local Window = MakeWindow({
-         Hub = {
-         Title = "Free version",
-         Animation = "Sddnin Hub"
-         },
-        Key = {
-        KeySystem = True,
-        Title = "Key System",
-        Description = "",
-        KeyLink = "",
-        Keys = {"Sddnin"},
-        Notifi = {
-        Notifications = true,
-        CorrectKey = "Running the Script...",
-       Incorrectkey = "The key is incorrect",
-       CopyKeyLink = "Copied to Clipboard"
-      }
-    }
-  })
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
-       MinimizeButton({
-       Image = "http://www.roblox.com/asset/?id=73608909933636",
-       Size = {60, 60},
-       Color = Color3.fromRGB(10, 10, 10),
-       Corner = true,
-       Stroke = false,
-       StrokeColor = Color3.fromRGB(255, 0, 0)
-      })
-      
------- Tab
-     local Tab1o = MakeTab({Name = "Blox fruits"})
-     local Tab2o = MakeTab({Name = "Misc"})
-local Tab3o = MakeTab({Name = "99 night in the forest"})
-local Tab4o = MakeTab({Name = "Dead rails"})
-local Tab5o = MakeTab({Name = "Grow a garden"})
-------- BUTTON
-    
-      AddButton(Tab1o, {
-     Name = "Blue X Hub",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-}  
-			
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()
+-- Tạo ScreenGui để chứa menu
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "CuteMenuGui"
+ScreenGui.Parent = PlayerGui
+
+-- Tạo Frame làm nền menu chính
+local MenuFrame = Instance.new("Frame")
+MenuFrame.Name = "MenuBackground"
+MenuFrame.Size = UDim2.new(0.35, 0, 0.65, 0) -- Kích thước menu
+MenuFrame.Position = UDim2.new(0.325, 0, 0.175, 0) -- Vị trí menu (ở giữa màn hình)
+MenuFrame.BackgroundColor3 = Color3.fromRGB(255, 220, 230) -- Màu hồng pastel
+MenuFrame.BorderColor3 = Color3.fromRGB(255, 180, 200) -- Màu viền đậm hơn
+MenuFrame.BorderSizePixel = 3
+MenuFrame.Parent = ScreenGui
+
+-- Thêm Corner cho Frame để làm tròn góc
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 15) -- Độ cong của góc
+UICorner.Parent = MenuFrame
+
+-- Tạo TextLabel làm tiêu đề menu
+local TitleLabel = Instance.new("TextLabel")
+TitleLabel.Name = "MenuTitle"
+TitleLabel.Size = UDim2.new(0.55, 0, 0.08, 0) -- Kích thước để chừa chỗ cho search bar
+TitleLabel.Position = UDim2.new(0.05, 0, 0.02, 0)
+TitleLabel.BackgroundColor3 = Color3.new(1, 1, 1) -- Màu trắng
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Text = "Sddnin Cute"
+TitleLabel.TextColor3 = Color3.fromRGB(100, 50, 70) -- Màu chữ tím than
+TitleLabel.Font = Enum.Font.FredokaOne -- Phông chữ dễ thương
+TitleLabel.TextSize = 28
+TitleLabel.TextScaled = true
+TitleLabel.Parent = MenuFrame
+
+-- Thanh tìm kiếm toàn cục (kế bên tiêu đề)
+local GlobalSearchBox = Instance.new("TextBox")
+GlobalSearchBox.Name = "GlobalSearchBox"
+GlobalSearchBox.Size = UDim2.new(0.3, 0, 0.05, 0) -- Kích thước search bar
+GlobalSearchBox.Position = UDim2.new(0.65, 0, 0.03, 0) -- Đặt kế bên tiêu đề
+GlobalSearchBox.PlaceholderText = "Tìm kiếm..."
+GlobalSearchBox.Text = ""
+GlobalSearchBox.BackgroundColor3 = Color3.fromRGB(250, 255, 250)
+GlobalSearchBox.BorderColor3 = Color3.fromRGB(150, 200, 170)
+GlobalSearchBox.BorderSizePixel = 1
+GlobalSearchBox.TextColor3 = Color3.fromRGB(50, 80, 60)
+GlobalSearchBox.Font = Enum.Font.FredokaOne
+GlobalSearchBox.TextSize = 16
+GlobalSearchBox.TextScaled = false
+GlobalSearchBox.Parent = MenuFrame
+
+-- Khung chứa các nút tab (Script, BoxTool, Misc, Thoát)
+local TabButtonsContainer = Instance.new("Frame")
+TabButtonsContainer.Name = "TabButtonsContainer"
+TabButtonsContainer.Size = UDim2.new(0.9, 0, 0.08, 0) -- Kích thước khung nút
+TabButtonsContainer.Position = UDim2.new(0.05, 0, 0.12, 0) -- Đặt dưới tiêu đề và search bar
+TabButtonsContainer.BackgroundTransparency = 1
+TabButtonsContainer.Parent = MenuFrame
+
+-- Layout cho các nút tab (sắp xếp ngang)
+local TabListLayout = Instance.new("UIListLayout")
+TabListLayout.FillDirection = Enum.FillDirection.Horizontal
+TabListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+TabListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+TabListLayout.Padding = UDim.new(0, 5) -- Khoảng cách giữa các nút tab
+TabListLayout.Parent = TabButtonsContainer
+
+-- Khung chứa nội dung của các tab (ScrollFrame để có thanh cuộn)
+local TabContentContainer = Instance.new("Frame")
+TabContentContainer.Name = "TabContentContainer"
+TabContentContainer.Size = UDim2.new(0.9, 0, 0.7, 0) -- Kích thước khung nội dung
+TabContentContainer.Position = UDim2.new(0.05, 0, 0.22, 0) -- Đặt dưới khung nút
+TabContentContainer.BackgroundColor3 = Color3.fromRGB(240, 250, 255) -- Màu nền nhẹ cho nội dung
+TabContentContainer.BorderColor3 = Color3.fromRGB(200, 230, 240)
+TabContentContainer.BorderSizePixel = 2
+TabContentContainer.Parent = MenuFrame
+
+local TabContentCorner = Instance.new("UICorner")
+TabContentCorner.CornerRadius = UDim.new(0, 10)
+TabContentCorner.Parent = TabContentContainer
+
+-- Hàm tạo nút dễ thương (dùng cho cả tab và nút chức năng)
+local function createCuteTabButton(parent, text)
+    local Button = Instance.new("TextButton")
+    Button.Size = UDim2.new(0.24, 0, 1, 0)
+    Button.BackgroundColor3 = Color3.fromRGB(200, 255, 220) -- Màu xanh mint pastel
+    Button.BorderColor3 = Color3.fromRGB(150, 200, 170)
+    Button.BorderSizePixel = 2
+    Button.Text = text
+    Button.TextColor3 = Color3.fromRGB(50, 100, 70)
+    Button.Font = Enum.Font.FredokaOne
+    Button.TextSize = 16
+    Button.TextScaled = true
+    Button.Parent = parent
+
+    local ButtonUICorner = Instance.new("UICorner")
+    ButtonUICorner.CornerRadius = UDim.new(0, 8)
+    ButtonUICorner.Parent = Button
+
+    -- Hiệu ứng khi di chuột qua nút
+    Button.MouseEnter:Connect(function()
+        Button.BackgroundColor3 = Color3.fromRGB(220, 255, 240) -- Màu sáng hơn khi hover
+    end)
+
+    Button.MouseLeave:Connect(function()
+        Button.BackgroundColor3 = Color3.fromRGB(200, 255, 220) -- Trở lại màu cũ
+    end)
+
+    return Button
 end
-})
-AddButton(Tab2o, {
-     Name = "Infinite Yield",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-		}
 
-		loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
-	end
-})
-	
-AddButton(Tab2o, {
-     Name = "Fly v3",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-		}
+-- Hàm tạo nút script dễ thương (cho nội dung tab)
+local function createCuteScriptButton(parent, text)
+    local Button = Instance.new("TextButton")
+    Button.Size = UDim2.new(0.95, 0, 0, 40) -- Chiều cao cố định
+    Button.BackgroundColor3 = Color3.fromRGB(230, 245, 255) -- Màu xanh nhạt
+    Button.BorderColor3 = Color3.fromRGB(180, 210, 230)
+    Button.BorderSizePixel = 1
+    Button.Text = text
+    Button.TextColor3 = Color3.fromRGB(60, 90, 120)
+    Button.Font = Enum.Font.FredokaOne
+    Button.TextSize = 18
+    Button.TextScaled = true
+    Button.Parent = parent
 
-		loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\40\39\104\116\116\112\115\58\47\47\103\105\115\116\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\109\101\111\122\111\110\101\89\84\47\98\102\48\51\55\100\102\102\57\102\48\97\55\48\48\49\55\51\48\52\100\100\100\54\55\102\100\99\100\51\55\48\47\114\97\119\47\101\49\52\101\55\52\102\52\50\53\98\48\54\48\100\102\53\50\51\51\52\51\99\102\51\48\98\55\56\55\48\55\52\101\98\51\99\53\100\50\47\97\114\99\101\117\115\37\50\53\50\48\120\37\50\53\50\48\102\108\121\37\50\53\50\48\50\37\50\53\50\48\111\98\102\108\117\99\97\116\111\114\39\41\44\116\114\117\101\41\41\40\41\10\10")()
-	end
-})
+    local ButtonUICorner = Instance.new("UICorner")
+    ButtonUICorner.CornerRadius = UDim.new(0, 6)
+    ButtonUICorner.Parent = Button
 
-AddButton(Tab1o, {
-     Name = "Hop fruit (Blox fruits)",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
+    Button.MouseEnter:Connect(function()
+        Button.BackgroundColor3 = Color3.fromRGB(240, 250, 255)
+    end)
 
-_G.FruitFinder = true;
-loadstring(game:HttpGet("https://scripts.alchemyhub.xyz"))()
-		end
-	})
+    Button.MouseLeave:Connect(function()
+        Button.BackgroundColor3 = Color3.fromRGB(230, 245, 255)
+    end)
 
-	AddButton(Tab4o, {
-     Name = "AirFlow",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-				}
-
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/255ac567ced3dcb9e69aa7e44c423f19.lua"))()
-			end
-		})
-
-AddButton(Tab3o, {
-     Name = "AirFlow",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-				}
-
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/255ac567ced3dcb9e69aa7e44c423f19.lua"))()
-			end
-		})
-
-AddButton(Tab4o, {
-     Name = "TN Roblox",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-				}
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/thiennrb7/Script/refs/heads/main/Bringall"))()
-			end
-		})
-AddButton(Tab1o, {
-     Name = "Redz",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/newredz/BloxFruits/refs/heads/main/Source.luau"))(Settings)
-		end
-	})
-
-AddButton(Tab1o, {
-     Name = "Min gaming",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/MinGamingHubNew/RealMinGaming/refs/heads/main/MinGaminvHubBloxFruits.lua"))()
-		end
-	}) 
-
-AddButton(Tab3o, {
-     Name = "H4x",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/H4xScripts/Loader/refs/heads/main/loader.lua", true))()
-		end
-	}) 
-AddButton(Tab1o, {
-     Name = "Rolls Rocye",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/RealMatsune/Rolls-Rocye/refs/heads/main/Loading.lua"))()
-		end
-	}) 
-AddButton(Tab2o, {
-     Name = "Emote",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-loadstring(game:HttpGetAsync("https://gist.githubusercontent.com/RedZenXYZ/3da6af1961efa275de6c3c2a6dbace03/raw/bb027f99cec0ea48ef9c5eabfb9116ddff20633d/FE%2520Emotes%2520Gui"))()
-		end
-	}) 
-
-
-	AddButton(Tab5o, {
-     Name = "Skull hub",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-loadstring(game:HttpGet('https://raw.githubusercontent.com/hungquan99/SkullHub/main/loader.lua'))()
-			end
-			})
-			
-	AddButton(Tab3o, {
-     Name = "NPC lock",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-loadstring(game:HttpGet("https://rawscripts.net/raw/Dead-Rails-NPC-LOCK-32544"))()
-			end
-			})
-
-AddButton(Tab2o, {
-     Name = "Nameless Admin",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-admin-15646"))()
-			end
-			})
-			
-			AddButton(Tab1o, {
-     Name = "Hiru Hub",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaStupid/Source/main/HiruHubVeriV2.lua"))()
-                        end
-			})
-			
-			AddButton(Tab1o, {
-     Name = "Maru Hub",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/KimP/refs/heads/main/MaruHub"))()
-			end
-			})
-			
-			AddButton(Tab1o, {
-     Name = "Trau Roblox",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/stuckez999/main/refs/heads/main/traurobloxpremium.lua"))()
-			end
-			})
-			
-			
-		AddButton(Tab4o, {
-     Name = "Skull Hub",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-loadstring(game:HttpGet('https://raw.githubusercontent.com/hungquan99/SkullHub/main/loader.lua'))()
-			end
-			})
-
-        AddButton(Tab4o, {
-     Name = "NatHub" ,
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/ArdyBotzz/NatHub/refs/heads/master/NatHub.lua"))()
+    return Button
 end
-			})
 
-       AddButton(Tab4o, {
-     Name = "Nebula Hub",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/NebulaHubOfc/Public/refs/heads/main/Loader.lua"))()
-			end
-			})
+-- Tạo các nút tab
+local ScriptButtonTab = createCuteTabButton(TabButtonsContainer, "Script")
+local BoxToolButtonTab = createCuteTabButton(TabButtonsContainer, "BoxTool")
+local MiscButtonTab = createCuteTabButton(TabButtonsContainer, "Misc")
+local ExitButtonTab = createCuteTabButton(TabButtonsContainer, "Thoát")
 
-       AddButton(Tab4o, {
-     Name = "Tp All",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/ringtaa/deadrailsui.github.io/refs/heads/main/RINGTA.LUA"))()
-                   end
-			})
+-- Khung nội dung cho tab Script (ScrollingFrame)
+local ScriptContentScroll = Instance.new("ScrollingFrame")
+ScriptContentScroll.Name = "ScriptContent"
+ScriptContentScroll.Size = UDim2.new(1, 0, 1, 0)
+ScriptContentScroll.Position = UDim2.new(0, 0, 0, 0)
+ScriptContentScroll.BackgroundTransparency = 1
+ScriptContentScroll.Parent = TabContentContainer
+ScriptContentScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+ScriptContentScroll.ScrollBarThickness = 6
+ScriptContentScroll.VerticalScrollBarInset = Enum.ScrollBarInset.Always
+ScriptContentScroll.ScrollBarImageColor3 = Color3.fromRGB(180, 210, 230)
+ScriptContentScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
 
-AddButton(Tab2o, {
-     Name = "Arceus X",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3"))()
-			end
-			})
+local ScriptContentLayout = Instance.new("UIListLayout")
+ScriptContentLayout.Padding = UDim.new(0, 8)
+ScriptContentLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+ScriptContentLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+ScriptContentLayout.Parent = ScriptContentScroll
+ScriptContentLayout.FillDirection = Enum.FillDirection.Vertical
 
-AddButton(Tab1o, {
-     Name = "Hop All",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Iamkhnah/noguchihyuga/refs/heads/main/ScriptHop.lua"))()
-	end
-			})
-
-AddButton(Tab2o, {
-     Name = "Shader",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-		loadstring(game:HttpGet('https://raw.githubusercontent.com/randomstring0/pshade-ultimate/refs/heads/main/src/cd.lua'))()
-			end
-			})
-			
-			AddButton(Tab1o, {
-     Name = "Teddy Hub",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/skibiditoiletgojo/Haidepzai/refs/heads/main/Teddy-FREMIUM"))()
-			end
-			})
-			
-			AddButton(Tab2o, {
-     Name = "Fix lag",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-OP-Anti-Lah-24771"))()
-			end
-			})
-
-AddButton(Tab2o, {
-     Name = "Fly",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Vehicle%20Fly%20Gui'))()
-			end
-			})
-
-AddButton(Tab4o, {
-     Name = "Native",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://getnative.cc/script/loader"))()
-			end
-			})
-
-AddButton(Tab4o, {
-     Name = "KiciaHook-V2",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://rawscripts.net/raw/Dead-Rails-Alpha-OP-KiciaHook-V2-Dead-Rails-Auto-Farm-And-More-38614"))()
-			end
-			})
-
-AddButton(Tab5o, {
-     Name = "No lag",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
+-- Thêm các script vào tab Script
+local scriptsData = {
+    {Name = "ThunderZ", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/GaG/Main.lua"))()'},
+    {Name = "H4x", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/H4xScripts/Loader/refs/heads/main/loader.lua", true))()'},
+    {Name = "Lunor", Code = 'loadstring(game:HttpGet("https://lunor.dev/loader"))()'},
+    {Name = "Speed Hub X", Code = 'loadstring(game:HttpGet("https://rawscripts.net/raw/Grow-a-Garden-Speed-Hub-X-Keyless-38062"))()'},
+    {Name = "Limit Hub", Code = 'loadstring(game:HttpGet(("https://raw.githubusercontent.com/FakeModz/LimitHub/refs/heads/main/LimitHub_Loader.lua")))()'},
+    {Name = "NatHub", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/ArdyBotzz/NatHub/refs/heads/master/NatHub.lua"))()'},
+    {Name = "Native", Code = 'loadstring(game:HttpGet("https://getnative.cc/script/loader"))()'},
+    {Name = "NoLag", Code = 'loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/NoLag-id/No-Lag-HUB/refs/heads/main/Loader/LoaderV1.lua"))()'},
+    {Name = "Skull Hub", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/hungquan99/SkullHub/main/loader.lua"))()'},
+    {Name = "Airflow", Code = 'loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/255ac567ced3dcb9e69aa7e44c423f19.lua"))()'},
+    {Name = "Min Gaming (Gag)", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/Min/refs/heads/main/MinThRz"))()'},
 }
- loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/NoLag-id/No-Lag-HUB/refs/heads/main/Loader/LoaderV1.lua"))()
+
+local scriptButtons = {} -- Bảng để lưu trữ các nút script
+
+for _, scriptInfo in ipairs(scriptsData) do
+    local scriptButton = createCuteScriptButton(ScriptContentScroll, scriptInfo.Name)
+    scriptButton.Activated:Connect(function()
+        warn("Executing script:", scriptInfo.Name)
+        loadstring(scriptInfo.Code)()
+    end)
+    scriptButtons[scriptInfo.Name] = scriptButton -- Lưu trữ nút theo tên để tìm kiếm
 end
-})
 
-AddButton(Tab5o, {
-     Name = "Native",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-			}
-			loadstring(game:HttpGet("https://getnative.cc/script/loader"))()
-			end
-			})
+-- Khung nội dung cho tab BoxTool (trước đây là Misc)
+local BoxToolContentScroll = Instance.new("ScrollingFrame")
+BoxToolContentScroll.Name = "BoxToolContent"
+BoxToolContentScroll.Size = UDim2.new(1, 0, 1, 0)
+BoxToolContentScroll.Position = UDim2.new(0, 0, 0, 0)
+BoxToolContentScroll.BackgroundTransparency = 1
+BoxToolContentScroll.Parent = TabContentContainer
+BoxToolContentScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+BoxToolContentScroll.ScrollBarThickness = 6
+BoxToolContentScroll.VerticalScrollBarInset = Enum.ScrollBarInset.Always
+BoxToolContentScroll.ScrollBarImageColor3 = Color3.fromRGB(180, 210, 230)
+BoxToolContentScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+BoxToolContentScroll.Visible = false -- Ban đầu ẩn
 
-        AddButton(Tab5o, {
-     Name = "NatHub" ,
-    Callback = function()
-          local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-                        }
-                        loadstring(game:HttpGet("https://raw.githubusercontent.com/ArdyBotzz/NatHub/refs/heads/master/NatHub.lua"))()
+local BoxToolContentLayout = Instance.new("UIListLayout")
+BoxToolContentLayout.Padding = UDim.new(0, 8)
+BoxToolContentLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+BoxToolContentLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+BoxToolContentLayout.Parent = BoxToolContentScroll
+BoxToolContentLayout.FillDirection = Enum.FillDirection.Vertical
+
+-- Thêm các script vào tab BoxTool
+local boxToolScriptsData = {
+    {Name = "R15 Emote", Code = 'loadstring(game:HttpGetAsync("https://gist.githubusercontent.com/RedZenXYZ/3da6af1961efa275de6c3c2a6dbace03/raw/bb027f99cec0ea48ef9c5eabfb9116ddff20633d/FE%2520Emotes%2520Gui"))()'},
+    {Name = "Arceus X", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3"))()'},
+    {Name = "Shader", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/pshade-ultimate/refs/heads/main/src/cd.lua"))()'},
+    {Name = "Fly", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Vehicle%20Fly%20Gui"))()'},
+    {Name = "Infinite Yield", Code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()'},
+    {Name = "Nameless Admin", Code = 'loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-nameless-admin-15646"))()'},
+}
+
+local boxToolScriptButtons = {}
+for _, scriptInfo in ipairs(boxToolScriptsData) do
+    local scriptButton = createCuteScriptButton(BoxToolContentScroll, scriptInfo.Name)
+    scriptButton.Activated:Connect(function()
+        warn("Executing BoxTool script:", scriptInfo.Name)
+        loadstring(scriptInfo.Code)()
+    end)
+    boxToolScriptButtons[scriptInfo.Name] = scriptButton
 end
-                        })
 
-AddButton(Tab2o, {
-     Name = "I wanna run away",
-    Callback = function()
-	  local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-}  
-			
-loadstring(game:HttpGet("https://raw.githubusercontent.com/0riginalWarrior/Stalkie/refs/heads/main/roblox.lua"))()
+-- Khung nội dung cho tab Misc (trước đây là Discord)
+local MiscContentScroll = Instance.new("ScrollingFrame")
+MiscContentScroll.Name = "MiscContent"
+MiscContentScroll.Size = UDim2.new(1, 0, 1, 0)
+MiscContentScroll.Position = UDim2.new(0, 0, 0, 0)
+MiscContentScroll.BackgroundTransparency = 1
+MiscContentScroll.Parent = TabContentContainer
+MiscContentScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+MiscContentScroll.ScrollBarThickness = 6
+MiscContentScroll.VerticalScrollBarInset = Enum.ScrollBarInset.Always
+MiscContentScroll.ScrollBarImageColor3 = Color3.fromRGB(180, 210, 230)
+MiscContentScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+MiscContentScroll.Visible = false -- Ban đầu ẩn
+
+local MiscContentLayout = Instance.new("UIListLayout")
+MiscContentLayout.Padding = UDim.new(0, 8)
+MiscContentLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+MiscContentLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+MiscContentLayout.Parent = MiscContentScroll
+MiscContentLayout.FillDirection = Enum.FillDirection.Vertical
+
+-- Thêm các script vào tab Misc (bao gồm Noclip, Speed và Teleport)
+local miscScriptsData = {
+    {Name = "Noclip (Bật/Tắt)", Code = [[
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+
+        -- Sử dụng biến _G để duy trì trạng thái Noclip qua các lần nhấp
+        _G.noclipEnabled = _G.noclipEnabled or false
+
+        local function applyNoclip(enabled)
+            for _, part in ipairs(character:GetDescendants()) do
+                -- Chỉ thay đổi CanCollide cho BasePart và nếu nó có CanCollide ban đầu
+                if part:IsA("BasePart") and part.CanCollide ~= nil then
+                    part.CanCollide = not enabled
+                end
+            end
+            -- Đảm bảo HumanoidRootPart cũng được xử lý
+            if character and character:FindFirstChild("HumanoidRootPart") then
+                character.HumanoidRootPart.CanCollide = not enabled
+            end
+        end
+
+        _G.noclipEnabled = not _G.noclipEnabled
+        applyNoclip(_G.noclipEnabled)
+        warn("Noclip:", _G.noclipEnabled and "Bật" or "Tắt")
+    ]]},
+    {Name = "Speed (Bật/Tắt)", Code = [[
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+        if humanoid then
+            -- Sử dụng biến _G để duy trì trạng thái Speed qua các lần nhấp
+            _G.speedEnabled = _G.speedEnabled or false
+            _G.originalWalkSpeed = _G.originalWalkSpeed or humanoid.WalkSpeed -- Lưu tốc độ gốc
+
+            if not _G.speedEnabled then
+                -- Bật Speed: Đặt tốc độ cao hơn
+                humanoid.WalkSpeed = 50 -- Bạn có thể thay đổi giá trị này
+                warn("Speed: Bật (Tốc độ:", humanoid.WalkSpeed .. ")")
+            else
+                -- Tắt Speed: Trở về tốc độ gốc
+                humanoid.WalkSpeed = _G.originalWalkSpeed
+                warn("Speed: Tắt (Tốc độ:", humanoid.WalkSpeed .. ")")
+            end
+            _G.speedEnabled = not _G.speedEnabled
+        else
+            warn("Không tìm thấy Humanoid trong nhân vật.")
+        end
+    ]]},
+}
+
+local miscScriptButtons = {} -- Bảng để lưu trữ các nút script Misc mới
+for _, scriptInfo in ipairs(miscScriptsData) do
+    local scriptButton = createCuteScriptButton(MiscContentScroll, scriptInfo.Name)
+    scriptButton.Activated:Connect(function()
+        warn("Executing Misc script:", scriptInfo.Name)
+        loadstring(scriptInfo.Code)()
+    end)
+    miscScriptButtons[scriptInfo.Name] = scriptButton
 end
-})
 
-AddButton(Tab5o, {
-     Name = "Limit Hub",
-    Callback = function()
-          local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-                }
- loadstring(game:HttpGet(('https://raw.githubusercontent.com/FakeModz/LimitHub/refs/heads/main/LimitHub_Loader.lua')))()
-        end
-})
+-- --- Bắt đầu phần Dịch chuyển đến người chơi khác ---
+-- Tạo ô nhập tên người chơi
+local TargetPlayerNameInput = Instance.new("TextBox")
+TargetPlayerNameInput.Name = "TargetPlayerNameInput"
+TargetPlayerNameInput.Size = UDim2.new(0.95, 0, 0, 40) -- Kích thước cố định
+TargetPlayerNameInput.PlaceholderText = "Nhập tên người chơi để dịch chuyển..."
+TargetPlayerNameInput.Text = ""
+TargetPlayerNameInput.BackgroundColor3 = Color3.fromRGB(250, 255, 250)
+TargetPlayerNameInput.BorderColor3 = Color3.fromRGB(150, 200, 170)
+TargetPlayerNameInput.BorderSizePixel = 1
+TargetPlayerNameInput.TextColor3 = Color3.fromRGB(50, 80, 60)
+TargetPlayerNameInput.Font = Enum.Font.FredokaOne
+TargetPlayerNameInput.TextSize = 16
+TargetPlayerNameInput.TextScaled = false
+TargetPlayerNameInput.Parent = MiscContentScroll
 
-AddButton(Tab5o, {
-     Name = "Speed Hub X",
-    Callback = function()
-          local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-                }
- loadstring(game:HttpGet("https://rawscripts.net/raw/Grow-a-Garden-Speed-Hub-X-Keyless-38062"))()
-        end
-})
+local TargetPlayerNameInputCorner = Instance.new("UICorner")
+TargetPlayerNameInputCorner.CornerRadius = UDim.new(0, 6)
+TargetPlayerNameInputCorner.Parent = TargetPlayerNameInput
 
-AddButton(Tab5o, {
-     Name = "Lunor",
-    Callback = function()
-          local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-                }
- loadstring(game:HttpGet("https://lunor.dev/loader"))()
+-- Tạo nút Dịch chuyển
+local TeleportButton = createCuteScriptButton(MiscContentScroll, "Dịch chuyển")
+TeleportButton.Name = "TeleportButton"
+TeleportButton.Activated:Connect(function()
+    local targetPlayerName = TargetPlayerNameInput.Text
+    if targetPlayerName and targetPlayerName ~= "" then
+        local targetPlayer = Players:FindFirstChild(targetPlayerName)
+        if targetPlayer then
+            local targetCharacter = targetPlayer.Character
+            if targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart") then
+                local localCharacter = LocalPlayer.Character
+                if localCharacter and localCharacter:FindFirstChild("HumanoidRootPart") then
+                    localCharacter.HumanoidRootPart.CFrame = targetCharacter.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0) -- Dịch lên một chút để tránh kẹt
+                    warn("Đã dịch chuyển đến:", targetPlayerName)
+                else
+                    warn("Không tìm thấy nhân vật của bạn.")
+                end
+            else
+                warn("Không tìm thấy nhân vật hoặc HumanoidRootPart của người chơi mục tiêu.")
+            end
+        else
+            warn("Không tìm thấy người chơi có tên:", targetPlayerName)
         end
-})
+    else
+        warn("Vui lòng nhập tên người chơi để dịch chuyển.")
+    end
+end)
 
-AddButton(Tab5o, {
-     Name = "ThunderZ",
-    Callback = function()
-          local Settings = {
-  JoinTeam = "Pirates"; -- Pirates/Marines
-  Translator = true; -- true/false
-                }
- loadstring(game:HttpGet('https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/GaG/Main.lua'))()
+-- Thêm nút dịch chuyển vào danh sách để tìm kiếm
+miscScriptButtons[TeleportButton.Name] = TeleportButton
+-- --- Kết thúc phần Dịch chuyển đến người chơi khác ---
+
+
+-- Biến theo dõi tab hiện đang hoạt động
+local currentActiveTabContent = ScriptContentScroll
+local currentActiveScriptButtons = scriptButtons -- Khởi tạo với scriptButtons
+
+-- Hàm chuyển đổi tab
+local function switchTab(newTabContentFrame, buttonList)
+    if currentActiveTabContent then
+        currentActiveTabContent.Visible = false
+    end
+    newTabContentFrame.Visible = true
+    currentActiveTabContent = newTabContentFrame
+    currentActiveScriptButtons = buttonList -- Cập nhật danh sách nút để tìm kiếm
+    GlobalSearchBox.Text = "" -- Xóa văn bản tìm kiếm khi chuyển tab để reset bộ lọc
+
+    -- Đảm bảo tất cả các nút trong tab mới hiển thị khi chuyển tab
+    if currentActiveScriptButtons then
+        for _, button in pairs(currentActiveScriptButtons) do
+            button.Visible = true
         end
-})
+    end
+end
+
+-- Logic tìm kiếm toàn cục
+GlobalSearchBox.Changed:Connect(function()
+    local searchText = GlobalSearchBox.Text:lower()
+    if currentActiveScriptButtons then
+        for _, button in pairs(currentActiveScriptButtons) do
+            button.Visible = string.find(button.Text:lower(), searchText) ~= nil or searchText == ""
+        end
+    end
+end)
+
+-- Kết nối sự kiện nhấp cho các nút tab
+ScriptButtonTab.Activated:Connect(function()
+    warn("Tab Script đã được nhấp!")
+    switchTab(ScriptContentScroll, scriptButtons)
+end)
+
+BoxToolButtonTab.Activated:Connect(function()
+    warn("Tab BoxTool đã được nhấp!")
+    switchTab(BoxToolContentScroll, boxToolScriptButtons)
+end)
+
+MiscButtonTab.Activated:Connect(function()
+    warn("Tab Misc đã được nhấp!")
+    switchTab(MiscContentScroll, miscScriptButtons)
+end)
+
+ExitButtonTab.Activated:Connect(function()
+    warn("Nút Thoát đã được nhấp!")
+    ScreenGui:Destroy() -- Đóng menu
+end)
+
+-- Đảm bảo tab Script hiển thị đúng khi khởi tạo và có danh sách nút để tìm kiếm
+switchTab(ScriptContentScroll, scriptButtons)
