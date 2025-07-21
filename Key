@@ -93,7 +93,7 @@ SubmitButton.MouseButton1Click:Connect(function()
         -- Hủy UI sau khi nhập đúng khóa
         ScreenGui:Destroy()
         -- Tải và thực thi script từ GitHub
-        loadstring(game:HttpGet(("https://raw.githubusercontent.com/Sddnin0/Sddnin/refs/heads/main/V2%20test")))()
+        loadstring(game:HttpGet(("https://raw.githubusercontent.com/Sddnin0/Sddnin/refs/heads/main/V2%20Key")))()
     else
         print("Incorrect key!")
         -- Hiển thị thông báo lỗi
