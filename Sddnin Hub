@@ -136,7 +136,7 @@ end)
 functionButton2.MouseButton1Click:Connect(function()
 	-- THỰC THI SCRIPT Sddnin (Key) -- Đã cập nhật
 	local success, err = pcall(function()
-		loadstring(game:HttpGet(("https://raw.githubusercontent.com/Sddnin0/Sddnin/refs/heads/main/V2")))()
+		loadstring(game:HttpGet(("https://raw.githubusercontent.com/Sddnin0/Sddnin/refs/heads/main/V2%20Key")))()
 	end)
 	if not success then
 		warn("Lỗi khi chạy script Sddnin (Key): " .. err)
