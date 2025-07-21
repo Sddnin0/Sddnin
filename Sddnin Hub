@@ -125,7 +125,7 @@ closeButton.MouseButton1Click:Connect(toggleMenu)
 functionButton1.MouseButton1Click:Connect(function()
 	-- THỰC THI SCRIPT Sddnin (free)
 	local success, err = pcall(function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/Sddnin0/Sddnin/refs/heads/main/Hub"))()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Sddnin0/Sddnin/refs/heads/main/V2%20Free"))()
 	end)
 	if not success then
 		warn("Lỗi khi chạy script Sddnin (free): " .. err)
